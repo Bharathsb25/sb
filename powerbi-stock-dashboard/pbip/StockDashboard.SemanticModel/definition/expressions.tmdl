@@ -1,0 +1,274 @@
+expression ProjectFolder = "C:\Users\YOUR_NAME\powerbi-stock-dashboard" meta [IsParameterQuery = true, Type = "Text", IsParameterQueryRequired = true]
+	lineageTag: 65d113dc-53a0-4c26-9ab5-be9f15dfc5b3
+	queryGroup: Setup
+
+	annotation PBI_ResultType = Text
+
+expression Watchlist =
+		// Query name : Watchlist          (Enable load: OFF)
+		// Edit config\watchlist.csv in Excel/Notepad to add or remove stocks. Yahoo symbols:
+		//   NSE = SYMBOL.NS   BSE = SYMBOL.BO   US = plain (AAPL)   Others: see finance.yahoo.com
+		let
+		    Path   = Text.TrimEnd(ProjectFolder, {"\", "/"}) & "\config\watchlist.csv",
+		    Raw    = Csv.Document(File.Contents(Path), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+		    Header = Table.PromoteHeaders(Raw, [PromoteAllScalars = true]),
+		    Typed  = Table.TransformColumnTypes(Header, {{"Symbol", type text}, {"Name", type text}, {"Sector", type text}}),
+		    Clean  = Table.Distinct(Table.SelectRows(Typed, each [Symbol] <> null and Text.Trim([Symbol]) <> ""), {"Symbol"})
+		in
+		    Clean
+	lineageTag: 32f5847c-0c09-4155-b6b7-1d6aa6e48b5e
+	queryGroup: Staging
+
+	annotation PBI_ResultType = Table
+
+expression IndexList =
+		// Query name : IndexList          (Enable load: OFF)
+		// Edit config\indices.csv to add/remove global indices, commodities, FX, bonds, crypto.
+		let
+		    Path   = Text.TrimEnd(ProjectFolder, {"\", "/"}) & "\config\indices.csv",
+		    Raw    = Csv.Document(File.Contents(Path), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+		    Header = Table.PromoteHeaders(Raw, [PromoteAllScalars = true]),
+		    Typed  = Table.TransformColumnTypes(Header, {{"Symbol", type text}, {"Name", type text}, {"Group", type text}, {"Region", type text}}),
+		    Clean  = Table.Distinct(Table.SelectRows(Typed, each [Symbol] <> null and Text.Trim([Symbol]) <> ""), {"Symbol"})
+		in
+		    Clean
+	lineageTag: af1c26ba-992a-4664-9b81-0fcf9bec4811
+	queryGroup: Staging
+
+	annotation PBI_ResultType = Table
+
+expression fnFetchChart =
+		// Query name : fnFetchChart       (a FUNCTION - Power BI shows it with an fx icon; Enable load: OFF)
+		// Downloads 1 year of daily candles + live quote metadata for ONE Yahoo Finance symbol.
+		// Never throws: on any failure it returns [Status = "Error: ...", Meta = null, Hist = null]
+		// so one bad ticker cannot break the whole refresh (it is reported on the Data Validation page instead).
+		(symbol as text) as record =>
+		let
+		    Fetch = () =>
+		        let
+		            Response = Json.Document(
+		                Web.Contents(
+		                    "https://query1.finance.yahoo.com",
+		                    [
+		                        RelativePath = "v8/finance/chart/" & Uri.EscapeDataString(symbol),
+		                        Query = [range = "1y", interval = "1d", includePrePost = "false"],
+		                        Headers = [#"User-Agent" = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36"],
+		                        ManualStatusHandling = {400, 401, 403, 404, 429, 500, 502, 503}
+		                    ]
+		                )
+		            ),
+		            Result   = Response[chart][result]{0},
+		            MetaRec  = Result[meta],
+		            Offset   = Record.FieldOrDefault(MetaRec, "gmtoffset", 0),
+		            Stamps   = Result[timestamp],
+		            Q        = Result[indicators][quote]{0},
+		            Epoch    = #datetime(1970, 1, 1, 0, 0, 0),
+		            Dates    = List.Transform(Stamps, each Date.From(Epoch + #duration(0, 0, 0, _ + Offset))),
+		            Hist0    = Table.FromColumns({Dates, Q[open], Q[high], Q[low], Q[close], Q[volume]}, {"Date", "Open", "High", "Low", "Close", "Volume"}),
+		            Hist1    = Table.SelectRows(Hist0, each [Close] <> null),
+		            HistTbl  = Table.TransformColumnTypes(Hist1, {{"Date", type date}, {"Open", type number}, {"High", type number}, {"Low", type number}, {"Close", type number}, {"Volume", type number}})
+		        in
+		            [Status = if Table.RowCount(HistTbl) = 0 then "Error: no price rows returned" else "OK", Meta = MetaRec, Hist = HistTbl],
+		    Attempt = try Fetch(),
+		    Out     = if Attempt[HasError]
+		              then [Status = "Error: " & Attempt[Error][Message], Meta = null, Hist = null]
+		              else Attempt[Value]
+		in
+		    Out
+	lineageTag: 593553d0-b909-4443-86ae-c93c49a7b05a
+	queryGroup: Staging
+
+	annotation PBI_ResultType = Function
+
+expression fnTechnicals =
+		// Query name : fnTechnicals       (FUNCTION; Enable load: OFF)
+		// Input : the record returned by fnFetchChart (Status = "OK").
+		// Output: one flat record of price, 52-week range, trend, momentum, risk and liquidity metrics.
+		(chart as record) as record =>
+		let
+		    H        = chart[Hist],
+		    Meta     = chart[Meta],
+		    C        = H[Close],
+		    N        = List.Count(C),
+		    LastP    = List.Last(C),
+		    PrevP    = if N > 1 then C{N - 2} else null,
+
+		    AvgLast  = (l as list, k as number) as nullable number => if List.Count(l) >= k then List.Average(List.LastN(l, k)) else null,
+		    Ret      = (l as list, k as number) as nullable number => if List.Count(l) > k then List.Last(l) / l{List.Count(l) - 1 - k} - 1 else null,
+
+		    // RSI(14) with Wilder smoothing
+		    RsiFn = (l as list) as nullable number =>
+		        if List.Count(l) < 16 then null else
+		        let
+		            Idx    = List.Positions(List.RemoveFirstN(l, 1)),
+		            Diffs  = List.Transform(Idx, each l{_ + 1} - l{_}),
+		            Gains  = List.Transform(Diffs, each if _ > 0 then _ else 0),
+		            Losses = List.Transform(Diffs, each if _ < 0 then -_ else 0),
+		            G0     = List.Average(List.FirstN(Gains, 14)),
+		            L0     = List.Average(List.FirstN(Losses, 14)),
+		            Rest   = List.Zip({List.Skip(Gains, 14), List.Skip(Losses, 14)}),
+		            Final  = List.Accumulate(Rest, {G0, L0}, (s, x) => {(s{0} * 13 + x{0}) / 14, (s{1} * 13 + x{1}) / 14})
+		        in
+		            if Final{1} = 0 then 100 else 100 - 100 / (1 + Final{0} / Final{1}),
+
+		    // Annualised volatility of daily returns
+		    Vol = (l as list) as nullable number =>
+		        if List.Count(l) < 30 then null else
+		        let
+		            R = List.Transform(List.Positions(List.RemoveFirstN(l, 1)), each l{_ + 1} / l{_} - 1)
+		        in
+		            List.StandardDeviation(R) * Number.Sqrt(252),
+
+		    // 52-week range: prefer Yahoo's own figure, fall back to the 1y candles
+		    Hi52H    = List.Max(H[High]),
+		    Lo52H    = List.Min(H[Low]),
+		    Hi52     = let v = Record.FieldOrDefault(Meta, "fiftyTwoWeekHigh", null) in if v = null then Hi52H else v,
+		    Lo52     = let v = Record.FieldOrDefault(Meta, "fiftyTwoWeekLow", null) in if v = null then Lo52H else v,
+
+		    Sma50V    = AvgLast(C, 50),
+		    Sma200V   = AvgLast(C, 200),
+		    LastDateV = List.Max(H[Date]),
+		    YStart   = Date.StartOfYear(LastDateV),
+		    Before   = Table.SelectRows(H, each [Date] < YStart),
+		    YtdBase  = if Table.RowCount(Before) > 0 then List.Last(Before[Close]) else null,
+
+		    Vols     = List.RemoveNulls(H[Volume]),
+		    VolN     = List.Count(Vols),
+		    AvgVol20 = if VolN > 21 then List.Average(List.Range(Vols, VolN - 21, 20)) else null,
+		    LastVol  = if VolN > 0 then List.Last(Vols) else null,
+
+		    TrendV    = if Sma50V = null or Sma200V = null then "n/a"
+		               else if LastP > Sma50V and Sma50V > Sma200V then "Uptrend"
+		               else if LastP < Sma50V and Sma50V < Sma200V then "Downtrend"
+		               else "Sideways / Mixed",
+		    Epoch    = #datetime(1970, 1, 1, 0, 0, 0),
+		    Offset   = Record.FieldOrDefault(Meta, "gmtoffset", 0),
+		    MktTime  = Record.FieldOrDefault(Meta, "regularMarketTime", null)
+		in
+		    [
+		        Price          = LastP,
+		        PrevClose      = PrevP,
+		        DayChange      = if PrevP = null then null else LastP - PrevP,
+		        DayChangePct   = if PrevP = null or PrevP = 0 then null else LastP / PrevP - 1,
+		        High52         = Hi52,
+		        Low52          = Lo52,
+		        High52Candles  = Hi52H,
+		        Low52Candles   = Lo52H,
+		        PctFromLow     = if Lo52 = null or Lo52 = 0 then null else LastP / Lo52 - 1,
+		        PctFromHigh    = if Hi52 = null or Hi52 = 0 then null else LastP / Hi52 - 1,
+		        Range52Pos     = if Hi52 = null or Lo52 = null or Hi52 = Lo52 then null else (LastP - Lo52) / (Hi52 - Lo52),
+		        Sma50          = Sma50V,
+		        Sma200         = Sma200V,
+		        Above50        = if Sma50V = null then null else LastP > Sma50V,
+		        Above200       = if Sma200V = null then null else LastP > Sma200V,
+		        Trend          = TrendV,
+		        Rsi14          = RsiFn(C),
+		        Ret1M          = Ret(C, 21),
+		        Ret3M          = Ret(C, 63),
+		        Ret6M          = Ret(C, 126),
+		        Ret1Y          = Ret(C, N - 1),
+		        RetYtd         = if YtdBase = null then null else LastP / YtdBase - 1,
+		        Volatility     = Vol(C),
+		        Volume         = LastVol,
+		        AvgVolume20    = AvgVol20,
+		        VolumeRatio    = if AvgVol20 = null or AvgVol20 = 0 or LastVol = null then null else LastVol / AvgVol20,
+		        Currency       = Record.FieldOrDefault(Meta, "currency", null),
+		        Exchange       = Record.FieldOrDefault(Meta, "fullExchangeName", Record.FieldOrDefault(Meta, "exchangeName", null)),
+		        LongName       = Record.FieldOrDefault(Meta, "longName", Record.FieldOrDefault(Meta, "shortName", null)),
+		        LastTradeTime  = if MktTime = null then null else Epoch + #duration(0, 0, 0, MktTime + Offset),
+		        LastDate       = LastDateV,
+		        HistRows       = N
+		    ]
+	lineageTag: ad1fd8e6-ec55-41cb-b953-c401cc7cab29
+	queryGroup: Staging
+
+	annotation PBI_ResultType = Function
+
+expression StgStocks =
+		// Query name : StgStocks          (staging; Enable load: OFF)
+		// One row per watchlist stock with the raw Yahoo response attached. Everything else reads from here,
+		// so each ticker is downloaded once per refresh.
+		let
+		    Src     = Watchlist,
+		    Fetched = Table.AddColumn(Src, "Chart", each fnFetchChart([Symbol]), type record),
+		    Out     = Table.AddColumn(Fetched, "Status", each [Chart][Status], type text)
+		in
+		    Out
+	lineageTag: cb14f718-6d1f-4ddd-ba70-719d15e03e95
+	queryGroup: Staging
+
+	annotation PBI_ResultType = Table
+
+expression StgIndices =
+		// Query name : StgIndices         (staging; Enable load: OFF)
+		let
+		    Src     = IndexList,
+		    Fetched = Table.AddColumn(Src, "Chart", each fnFetchChart([Symbol]), type record),
+		    Out     = Table.AddColumn(Fetched, "Status", each [Chart][Status], type text)
+		in
+		    Out
+	lineageTag: 8148f6dc-a279-4f50-b814-a20b07a172d7
+	queryGroup: Staging
+
+	annotation PBI_ResultType = Table
+
+expression Quotes =
+		// Query name : Quotes             (staging; Enable load: OFF)
+		// Live price + technicals for every stock that downloaded successfully.
+		let
+		    Ok      = Table.SelectRows(StgStocks, each [Status] = "OK"),
+		    Calc    = Table.AddColumn(Ok, "T", each fnTechnicals([Chart]), type record),
+		    Slim    = Table.RemoveColumns(Calc, {"Chart", "Status"}),
+		    Names   = Record.FieldNames(fnTechnicals(Ok{0}[Chart])),
+		    Expand  = Table.ExpandRecordColumn(Slim, "T", Names, Names),
+		    Types   = Table.TransformColumnTypes(Expand, {
+		                {"Price", type number}, {"PrevClose", type number}, {"DayChange", type number}, {"DayChangePct", type number},
+		                {"High52", type number}, {"Low52", type number}, {"High52Candles", type number}, {"Low52Candles", type number},
+		                {"PctFromLow", type number}, {"PctFromHigh", type number}, {"Range52Pos", type number},
+		                {"Sma50", type number}, {"Sma200", type number}, {"Above50", type logical}, {"Above200", type logical}, {"Trend", type text},
+		                {"Rsi14", type number}, {"Ret1M", type number}, {"Ret3M", type number}, {"Ret6M", type number}, {"Ret1Y", type number}, {"RetYtd", type number},
+		                {"Volatility", type number}, {"Volume", type number}, {"AvgVolume20", type number}, {"VolumeRatio", type number},
+		                {"Currency", type text}, {"Exchange", type text}, {"LongName", type text}, {"LastTradeTime", type datetime}, {"LastDate", type date}, {"HistRows", Int64.Type}})
+		in
+		    Types
+	lineageTag: 89d75847-5c29-4af1-a081-2a2b167ce4b9
+	queryGroup: Staging
+
+	annotation PBI_ResultType = Table
+
+expression Fundamentals =
+		// Query name : Fundamentals       (staging; Enable load: OFF)
+		// Valuation, quality, growth and ANALYST TARGET data.
+		// 1) Tries live Yahoo data through Python (needs:  pip install yfinance pandas  and Power BI > Options > Python scripting).
+		// 2) If Python is unavailable it falls back to output\fundamentals.csv (create it with:  python python\fetch_fundamentals.py --csv).
+		// 3) If neither works it returns an empty table - the dashboard still loads with price/technical data only.
+		let
+		    Root     = Text.TrimEnd(ProjectFolder, {"\", "/"}),
+		    Columns  = {"Symbol", "FundStatus", "FetchedAt", "FSector", "Industry", "RecKey", "MarketCap", "PE", "ForwardPE", "PB", "PEG", "EPS", "ForwardEPS", "BookValue",
+		                "ROE", "ROA", "ProfitMargin", "OperatingMargin", "RevenueGrowth", "EarningsGrowth", "DebtToEquityPct", "CurrentRatio", "FreeCashFlow", "TotalRevenue",
+		                "Beta", "DividendRate", "PayoutRatio", "TargetMean", "TargetMedian", "TargetHigh", "TargetLow", "AnalystCount", "RecMean", "InsiderHolding",
+		                "InstitutionHolding", "DividendYield", "VotesStrongBuy", "VotesBuy", "VotesHold", "VotesSell", "VotesStrongSell"},
+		    TextCols = {"Symbol", "FundStatus", "FetchedAt", "FSector", "Industry", "RecKey"},
+		    NumCols  = List.Difference(Columns, TextCols),
+
+		    Script   = () => Text.FromBinary(File.Contents(Root & "\python\fetch_fundamentals.py"), TextEncoding.Utf8),
+		    FromPy   = () => Python.Execute(Script(), [dataset = Watchlist]){[Name = "fundamentals"]}[Value],
+		    FromCsv  = () => Table.PromoteHeaders(Csv.Document(File.Contents(Root & "\output\fundamentals.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]), [PromoteAllScalars = true]),
+
+		    TryPy    = try FromPy(),
+		    TryCsv   = try FromCsv(),
+		    Picked   = if not TryPy[HasError] then [Data = TryPy[Value], Src = "Python (live)"]
+		               else if not TryCsv[HasError] then [Data = TryCsv[Value], Src = "CSV cache"]
+		               else [Data = #table(Columns, {}), Src = "Unavailable"],
+
+		    Aligned  = Table.SelectColumns(Picked[Data], Columns, MissingField.UseNull),
+		    AsText   = Table.TransformColumns(Aligned, List.Transform(TextCols, each {_, (v) => if v = null then null else Text.From(v), type nullable text})),
+		    AsNum    = Table.TransformColumns(AsText, List.Transform(NumCols, each {_, (v) => try (let n = Number.From(v) in if n = null or Number.IsNaN(n) then null else n) otherwise null, type nullable number})),
+		    WithSrc  = Table.AddColumn(AsNum, "FundSource", each Picked[Src], type text)
+		in
+		    WithSrc
+	lineageTag: 4a8b7b0e-5cb5-4685-9d58-c42fb9b2d105
+	queryGroup: Staging
+
+	annotation PBI_ResultType = Table
+

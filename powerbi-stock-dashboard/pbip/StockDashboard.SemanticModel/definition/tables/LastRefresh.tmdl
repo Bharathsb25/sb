@@ -1,0 +1,20 @@
+table LastRefresh
+	lineageTag: b2e13a96-0ba3-4725-88c1-827229aa7738
+
+	column LastRefresh
+		dataType: dateTime
+		lineageTag: c2649a4f-3e45-4e2a-92d1-a1b860149edd
+		summarizeBy: none
+		sourceColumn: LastRefresh
+
+	partition LastRefresh = m
+		mode: import
+		source =
+				// Query name : LastRefresh        (LOAD: ON)
+				let
+				    NowIst = DateTime.From(DateTimeZone.SwitchZone(DateTimeZone.UtcNow(), 5, 30)),
+				    Out    = #table(type table [LastRefresh = datetime], {{NowIst}})
+				in
+				    Out
+
+	annotation PBI_ResultType = Table

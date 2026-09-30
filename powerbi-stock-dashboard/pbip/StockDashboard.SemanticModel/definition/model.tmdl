@@ -1,0 +1,25 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+
+ref table Prices
+ref table IndexPrices
+ref table Indices
+ref table LastRefresh
+ref table News
+ref table Scorecard
+ref table Checks
+ref table Validation
+
+ref expression ProjectFolder
+ref expression Watchlist
+ref expression IndexList
+ref expression fnFetchChart
+ref expression fnTechnicals
+ref expression StgStocks
+ref expression StgIndices
+ref expression Quotes
+ref expression Fundamentals
+
+annotation PBI_QueryOrder = ["ProjectFolder", "Watchlist", "IndexList", "fnFetchChart", "fnTechnicals", "StgStocks", "StgIndices", "Quotes", "Fundamentals", "Prices", "IndexPrices", "Indices", "LastRefresh", "News", "Scorecard", "Checks", "Validation"]

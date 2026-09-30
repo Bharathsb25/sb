@@ -1,0 +1,16 @@
+relationship 65237fc2-c136-4e59-b5e2-669a9c455f73
+	fromColumn: Prices.Symbol
+	toColumn: Scorecard.Symbol
+
+relationship 713a5fc9-fb72-4b42-9ff6-9ae5df6b91a5
+	fromColumn: Checks.Symbol
+	toColumn: Scorecard.Symbol
+
+relationship b864c1f8-89d9-4413-832e-c8332de9d268
+	fromColumn: News.Symbol
+	toColumn: Scorecard.Symbol
+
+relationship d7449f1b-a3dc-4042-981a-cb2c86792145
+	fromColumn: IndexPrices.Symbol
+	toColumn: Indices.Symbol
+

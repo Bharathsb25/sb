@@ -1,0 +1,177 @@
+table Validation
+	lineageTag: 60c33527-4adc-4bc3-ad86-86134de80002
+
+	column Symbol
+		dataType: string
+		lineageTag: 6e2dea68-7ef9-4d8f-b811-cdc41885a140
+		summarizeBy: none
+		sourceColumn: Symbol
+
+	column Name
+		dataType: string
+		lineageTag: 9b726b7b-4203-411d-bb93-b00c355fd10c
+		summarizeBy: none
+		sourceColumn: Name
+
+	column Status
+		dataType: string
+		lineageTag: 02c0d921-7032-47d5-8ee2-dfb39dca9221
+		summarizeBy: none
+		sourceColumn: Status
+
+	column HistRows
+		dataType: int64
+		lineageTag: 51152ad0-9f67-46f3-9783-5bfd5d3a1a91
+		summarizeBy: none
+		sourceColumn: HistRows
+
+	column LastDate
+		dataType: dateTime
+		lineageTag: ef16fdad-fd96-47be-87b6-8c76ad353c65
+		summarizeBy: none
+		sourceColumn: LastDate
+
+	column High52
+		dataType: double
+		lineageTag: e6a182b2-13e8-4f5a-9c8b-4783d8e8004c
+		summarizeBy: none
+		sourceColumn: High52
+
+	column High52Candles
+		dataType: double
+		lineageTag: cd45df09-8ca3-454e-836c-e2791cbcc268
+		summarizeBy: none
+		sourceColumn: High52Candles
+
+	column Low52
+		dataType: double
+		lineageTag: 31dd8024-dbd2-4535-9952-a08348160555
+		summarizeBy: none
+		sourceColumn: Low52
+
+	column Low52Candles
+		dataType: double
+		lineageTag: a5b2113f-d4a0-4aa3-83d0-2ab5d014296f
+		summarizeBy: none
+		sourceColumn: Low52Candles
+
+	column FundStatus
+		dataType: string
+		lineageTag: cfcca7fa-b23d-4970-95b1-9b6003a9afec
+		summarizeBy: none
+		sourceColumn: FundStatus
+
+	column FundSource
+		dataType: string
+		lineageTag: e430d0fd-cde2-4abb-9d70-3f19cf6a800f
+		summarizeBy: none
+		sourceColumn: FundSource
+
+	column FundCoverage
+		dataType: double
+		lineageTag: a5380d62-100f-4dd9-ac21-79fdf336030f
+		summarizeBy: none
+		sourceColumn: FundCoverage
+
+	column Type
+		dataType: string
+		lineageTag: 3e68ddef-062c-4fc0-84f5-70d839f550d5
+		summarizeBy: none
+		sourceColumn: Type
+
+	column DaysSinceTrade
+		dataType: int64
+		lineageTag: e85a8680-c471-4707-ada9-24da56fa6839
+		summarizeBy: none
+		sourceColumn: DaysSinceTrade
+
+	column Overall
+		dataType: string
+		lineageTag: c50a3342-4076-4cb3-879f-e25e0dbd88a7
+		summarizeBy: none
+		sourceColumn: Overall
+
+	column Issues
+		dataType: string
+		lineageTag: bd062ee5-282a-4429-8cc2-0557383494f2
+		summarizeBy: none
+		sourceColumn: Issues
+
+	measure 'Symbols Checked' =
+			COUNTROWS ( Validation )
+		lineageTag: 46772fdc-ac18-4878-bbac-59dea55085a1
+
+	measure 'Symbols Good' =
+			CALCULATE ( COUNTROWS ( Validation ), Validation[Overall] = "Good" )
+		lineageTag: 96a135a3-1b14-4959-aba9-1927d01b86e7
+
+	measure 'Symbols Warning' =
+			CALCULATE ( COUNTROWS ( Validation ), Validation[Overall] = "Warning" )
+		lineageTag: 27564edd-e798-4cbe-9e93-801b126d45f2
+
+	measure 'Symbols Failed' =
+			CALCULATE ( COUNTROWS ( Validation ), Validation[Overall] = "Failed" )
+		lineageTag: 1bc3f2f5-36e1-482d-bd69-357fb6d7faa3
+
+	measure 'Data Health %' =
+			DIVIDE ( [Symbols Good], [Symbols Checked] )
+		formatString: 0.0%
+		lineageTag: 92b6471f-0e9d-4319-b808-22286f1d3674
+
+	measure 'Fundamentals Coverage %' =
+			AVERAGE ( Scorecard[FundCoverage] )
+		formatString: 0.0%
+		lineageTag: 10c2dce9-e2c4-4a7b-8468-bf5509242194
+
+	measure 'Last Updated' =
+			"Updated " & FORMAT ( MAX ( LastRefresh[LastRefresh] ), "dd mmm yyyy, hh:nn AM/PM" ) & " IST"
+		lineageTag: 3afe985e-3ec4-4e1d-b247-36abb92fb8ad
+
+	partition Validation = m
+		mode: import
+		source =
+				// Query name : Validation         (LOAD: ON)  - data-health report for every stock and index in your config files.
+				// Answers: did the ticker download? is the data fresh? do the two 52-week sources agree? how complete are the fundamentals?
+				let
+				    TodayIst = Date.From(DateTimeZone.SwitchZone(DateTimeZone.UtcNow(), 5, 30)),
+				    Cols     = {"Symbol", "HistRows", "LastDate", "High52", "High52Candles", "Low52", "Low52Candles", "FundStatus", "FundSource", "FundCoverage"},
+
+				    Build = (stg as table, ok as table, typeName as text) as table =>
+				        let
+				            A = Table.SelectColumns(stg, {"Symbol", "Name", "Status"}),
+				            B = Table.SelectColumns(ok, Cols, MissingField.UseNull),
+				            J = Table.ExpandTableColumn(Table.NestedJoin(A, {"Symbol"}, B, {"Symbol"}, "B", JoinKind.LeftOuter), "B", List.RemoveItems(Cols, {"Symbol"})),
+				            T = Table.AddColumn(J, "Type", each typeName, type text)
+				        in
+				            T,
+
+				    Stocks   = Build(StgStocks, Scorecard, "Stock"),
+				    Idx      = Build(StgIndices, Indices, "Index / Macro"),
+				    All      = Table.Combine({Stocks, Idx}),
+
+				    Scored   = Table.AddColumn(All, "V", each
+				                let
+				                    days    = if [LastDate] = null then null else Duration.Days(TodayIst - [LastDate]),
+				                    stale   = days <> null and days > 5,
+				                    hiDiff  = if [High52] = null or [High52Candles] = null or [High52Candles] = 0 then null else Number.Abs([High52] / [High52Candles] - 1),
+				                    loDiff  = if [Low52] = null or [Low52Candles] = null or [Low52Candles] = 0 then null else Number.Abs([Low52] / [Low52Candles] - 1),
+				                    mism    = (hiDiff <> null and hiDiff > 0.05) or (loDiff <> null and loDiff > 0.05),
+				                    lowHist = [HistRows] <> null and [HistRows] < 200,
+				                    fundBad = [Type] = "Stock" and ([FundCoverage] = null or [FundCoverage] < 0.5),
+				                    issues  = List.Select({
+				                                  if [Status] <> "OK" then [Status] else null,
+				                                  if stale then "Stale price (" & Text.From(days) & " days old)" else null,
+				                                  if mism then "52W high/low differ >5% between sources" else null,
+				                                  if lowHist then "Short history (<200 sessions) - SMA200 unavailable" else null,
+				                                  if fundBad then "Fundamentals incomplete - valuation/analyst scores limited" else null
+				                              }, each _ <> null),
+				                    overall = if [Status] <> "OK" then "Failed" else if List.Count(issues) > 0 then "Warning" else "Good"
+				                in
+				                    [DaysSinceTrade = days, Overall = overall, Issues = Text.Combine(issues, "; ")]),
+				    OutNames = {"DaysSinceTrade", "Overall", "Issues"},
+				    Expanded = Table.ExpandRecordColumn(Scored, "V", OutNames, OutNames),
+				    Typed    = Table.TransformColumnTypes(Expanded, {{"Status", type text}, {"HistRows", Int64.Type}, {"LastDate", type date}, {"FundCoverage", type number}, {"DaysSinceTrade", Int64.Type}, {"Overall", type text}, {"Issues", type text}, {"FundStatus", type text}, {"FundSource", type text}})
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table

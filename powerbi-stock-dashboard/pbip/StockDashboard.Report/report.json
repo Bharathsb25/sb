@@ -1,0 +1,106 @@
+{
+  "config": "{\"version\": \"5.59\", \"themeCollection\": {\"baseTheme\": {\"name\": \"CY24SU10\", \"version\": \"5.59\", \"type\": 2}, \"customTheme\": {\"name\": \"market-dark.json\", \"version\": \"5.59\", \"type\": 1}}, \"activeSectionIndex\": 0, \"defaultDrillFilterOtherVisuals\": true}",
+  "layoutOptimization": 0,
+  "resourcePackages": [
+    {
+      "resourcePackage": {
+        "name": "SharedResources",
+        "type": 2,
+        "items": [
+          {
+            "type": 202,
+            "path": "BaseThemes/CY24SU10.json",
+            "name": "CY24SU10"
+          }
+        ],
+        "disabled": false
+      }
+    },
+    {
+      "resourcePackage": {
+        "name": "RegisteredResources",
+        "type": 1,
+        "items": [
+          {
+            "type": 202,
+            "path": "market-dark.json",
+            "name": "market-dark.json"
+          }
+        ],
+        "disabled": false
+      }
+    }
+  ],
+  "sections": [
+    {
+      "config": "{}",
+      "displayName": "Market Pulse",
+      "displayOption": 1,
+      "filters": "[]",
+      "height": 720.0,
+      "name": "ReportSection1",
+      "visualContainers": [],
+      "width": 1280.0
+    },
+    {
+      "config": "{}",
+      "displayName": "Stock Picks",
+      "displayOption": 1,
+      "filters": "[]",
+      "height": 720.0,
+      "name": "ReportSection2",
+      "visualContainers": [],
+      "width": 1280.0
+    },
+    {
+      "config": "{}",
+      "displayName": "Value and 52-Week Lows",
+      "displayOption": 1,
+      "filters": "[]",
+      "height": 720.0,
+      "name": "ReportSection3",
+      "visualContainers": [],
+      "width": 1280.0
+    },
+    {
+      "config": "{}",
+      "displayName": "Stock Deep Dive",
+      "displayOption": 1,
+      "filters": "[]",
+      "height": 720.0,
+      "name": "ReportSection4",
+      "visualContainers": [],
+      "width": 1280.0
+    },
+    {
+      "config": "{}",
+      "displayName": "Global Markets and Macro",
+      "displayOption": 1,
+      "filters": "[]",
+      "height": 720.0,
+      "name": "ReportSection5",
+      "visualContainers": [],
+      "width": 1280.0
+    },
+    {
+      "config": "{}",
+      "displayName": "News and Sentiment",
+      "displayOption": 1,
+      "filters": "[]",
+      "height": 720.0,
+      "name": "ReportSection6",
+      "visualContainers": [],
+      "width": 1280.0
+    },
+    {
+      "config": "{}",
+      "displayName": "Data Validation",
+      "displayOption": 1,
+      "filters": "[]",
+      "height": 720.0,
+      "name": "ReportSection7",
+      "visualContainers": [],
+      "width": 1280.0
+    }
+  ]
+}

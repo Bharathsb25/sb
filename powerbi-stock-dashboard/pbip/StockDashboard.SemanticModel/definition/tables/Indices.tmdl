@@ -1,0 +1,283 @@
+table Indices
+	lineageTag: 1a84c9d7-22dc-4ba1-a076-662818bd9030
+
+	column Symbol
+		dataType: string
+		lineageTag: 9ab00957-bd9b-4350-baec-9e24a00e3e3d
+		summarizeBy: none
+		sourceColumn: Symbol
+
+	column Name
+		dataType: string
+		lineageTag: 07cde4ef-f361-432a-93ba-126c028c93de
+		summarizeBy: none
+		sourceColumn: Name
+
+	column Group
+		dataType: string
+		lineageTag: 9e7cfd08-f5e2-4a55-a396-c01353a0e160
+		summarizeBy: none
+		sourceColumn: Group
+
+	column Region
+		dataType: string
+		lineageTag: 1bb060b3-52f8-45c7-b3ed-ca85587c1547
+		summarizeBy: none
+		sourceColumn: Region
+
+	column Price
+		dataType: double
+		lineageTag: 992651e4-a684-4398-8a68-0687f6737b21
+		summarizeBy: none
+		sourceColumn: Price
+
+	column PrevClose
+		dataType: double
+		lineageTag: f5562571-6c78-4a71-bc9e-8380ddec9a66
+		summarizeBy: none
+		sourceColumn: PrevClose
+
+	column DayChange
+		dataType: double
+		lineageTag: 527fc18d-4900-4d6c-a6c0-9f2e653e05e7
+		summarizeBy: none
+		sourceColumn: DayChange
+
+	column DayChangePct
+		dataType: double
+		lineageTag: 3b38397f-0852-4094-9b26-4adacf5637fd
+		summarizeBy: none
+		sourceColumn: DayChangePct
+
+	column High52
+		dataType: double
+		lineageTag: bad991a4-f7de-41c7-8bf7-0a101b14ccf8
+		summarizeBy: none
+		sourceColumn: High52
+
+	column Low52
+		dataType: double
+		lineageTag: 026720de-bb6f-4387-81db-8dfc01aa5064
+		summarizeBy: none
+		sourceColumn: Low52
+
+	column High52Candles
+		dataType: double
+		lineageTag: 90c5bc17-93fb-4330-a7f4-9d8279490938
+		summarizeBy: none
+		sourceColumn: High52Candles
+
+	column Low52Candles
+		dataType: double
+		lineageTag: 3cfda1c1-6398-4ec7-8c87-c0058a6f0213
+		summarizeBy: none
+		sourceColumn: Low52Candles
+
+	column PctFromLow
+		dataType: double
+		lineageTag: 5840adb0-b055-4c68-b558-7c05e20d1d85
+		summarizeBy: none
+		sourceColumn: PctFromLow
+
+	column PctFromHigh
+		dataType: double
+		lineageTag: 4d5a4ba6-1bf2-45b2-a2e3-074ba33bba9b
+		summarizeBy: none
+		sourceColumn: PctFromHigh
+
+	column Range52Pos
+		dataType: double
+		lineageTag: 4d53f588-44e6-4087-b1dc-8acf7a30ceb6
+		summarizeBy: none
+		sourceColumn: Range52Pos
+
+	column Sma50
+		dataType: double
+		lineageTag: 7a4ea745-ee89-493f-a8b6-f13e3e093e2f
+		summarizeBy: none
+		sourceColumn: Sma50
+
+	column Sma200
+		dataType: double
+		lineageTag: 2d3cfb18-b318-468c-b345-2b4d1b5c43dc
+		summarizeBy: none
+		sourceColumn: Sma200
+
+	column Rsi14
+		dataType: double
+		lineageTag: 68f49b75-ba39-4ea8-8959-b0e0edbd68f5
+		summarizeBy: none
+		sourceColumn: Rsi14
+
+	column Ret1M
+		dataType: double
+		lineageTag: 9b7560ed-99f6-4315-97d3-4210c7872b1b
+		summarizeBy: none
+		sourceColumn: Ret1M
+
+	column Ret3M
+		dataType: double
+		lineageTag: 421e8e1c-bd6e-41a6-a5b9-d4f989934d56
+		summarizeBy: none
+		sourceColumn: Ret3M
+
+	column Ret6M
+		dataType: double
+		lineageTag: 3dc9beb7-4f0c-4203-aa20-4d50d220ccd3
+		summarizeBy: none
+		sourceColumn: Ret6M
+
+	column Ret1Y
+		dataType: double
+		lineageTag: c77e0353-1898-4bfb-bb8c-39d2c7a76b7c
+		summarizeBy: none
+		sourceColumn: Ret1Y
+
+	column RetYtd
+		dataType: double
+		lineageTag: 8a9cc303-8ed4-41e2-b17b-031d8b3fde22
+		summarizeBy: none
+		sourceColumn: RetYtd
+
+	column Volatility
+		dataType: double
+		lineageTag: 2fecceba-fdea-4777-8c4d-fb5169e55fce
+		summarizeBy: none
+		sourceColumn: Volatility
+
+	column Volume
+		dataType: double
+		lineageTag: cc694507-b648-45cb-9f5f-990191161322
+		summarizeBy: none
+		sourceColumn: Volume
+
+	column AvgVolume20
+		dataType: double
+		lineageTag: 42b61ad9-0d11-454b-bc89-363937576de6
+		summarizeBy: none
+		sourceColumn: AvgVolume20
+
+	column VolumeRatio
+		dataType: double
+		lineageTag: 28f51654-bdbd-4c46-b8da-9f399bac6038
+		summarizeBy: none
+		sourceColumn: VolumeRatio
+
+	column Above50
+		dataType: boolean
+		lineageTag: 5bfcee08-6ede-4551-8615-c920673b22ac
+		summarizeBy: none
+		sourceColumn: Above50
+
+	column Above200
+		dataType: boolean
+		lineageTag: 89f2fcba-08a5-40d7-97d5-a52bd4f9dd06
+		summarizeBy: none
+		sourceColumn: Above200
+
+	column Trend
+		dataType: string
+		lineageTag: edaf1fae-a3ff-4ec7-8a4b-540c8c298a71
+		summarizeBy: none
+		sourceColumn: Trend
+
+	column Currency
+		dataType: string
+		lineageTag: e6191f0d-7846-4abe-a6f1-7792795e9e28
+		summarizeBy: none
+		sourceColumn: Currency
+
+	column Exchange
+		dataType: string
+		lineageTag: ea91375b-f2b3-4556-9208-fd5cacc1f310
+		summarizeBy: none
+		sourceColumn: Exchange
+
+	column LongName
+		dataType: string
+		lineageTag: 4fad6b93-1c9c-4358-a800-b08901186904
+		summarizeBy: none
+		sourceColumn: LongName
+
+	column LastTradeTime
+		dataType: dateTime
+		lineageTag: d8f4acbf-8da8-48c5-a36e-85eae7fae79d
+		summarizeBy: none
+		sourceColumn: LastTradeTime
+
+	column LastDate
+		dataType: dateTime
+		lineageTag: 20f3e470-1647-4d7c-9831-877cc2d16917
+		summarizeBy: none
+		sourceColumn: LastDate
+
+	column HistRows
+		dataType: int64
+		lineageTag: 84240180-90f3-4ce5-8c19-7cd11e3392d5
+		summarizeBy: none
+		sourceColumn: HistRows
+
+	measure 'Index Level' =
+			AVERAGE ( Indices[Price] )
+		lineageTag: 00eae147-4f08-431d-9741-72313e32a1ea
+
+	measure 'Index Day Change %' =
+			AVERAGE ( Indices[DayChangePct] )
+		formatString: 0.0%
+		lineageTag: a5286472-e0c2-433f-acfa-922d21319189
+
+	measure 'Index 1Y Return %' =
+			AVERAGE ( Indices[Ret1Y] )
+		formatString: 0.0%
+		lineageTag: a2cf9a45-d9d9-4e32-bc6e-8923ed862b6d
+
+	measure 'Index YTD Return %' =
+			AVERAGE ( Indices[RetYtd] )
+		formatString: 0.0%
+		lineageTag: e99b1f36-806e-4f73-8277-4209d4b77c07
+
+	measure 'Index From 52W High %' =
+			AVERAGE ( Indices[PctFromHigh] )
+		formatString: 0.0%
+		lineageTag: bda8616c-2e63-461b-909c-3819fae2b3b2
+
+	measure 'Indices Up' =
+			CALCULATE ( COUNTROWS ( Indices ), Indices[DayChangePct] > 0 )
+		lineageTag: 51d240a8-5b9c-46c9-b499-bb6ae0f0f603
+
+	measure 'Indices Down' =
+			CALCULATE ( COUNTROWS ( Indices ), Indices[DayChangePct] < 0 )
+		lineageTag: 5b23e783-079a-43d8-ae88-52c4e4fac6ef
+
+	measure 'Global Risk Mode' =
+			// Uses the two fear gauges in config\indices.csv: CBOE VIX and India VIX
+		lineageTag: 473c9728-0805-4fc4-ba90-bcefa235bfb9
+
+	measure 'Index Heat Color' =
+
+		lineageTag: 4c40bb20-af56-4f28-ad9a-0dbd988ebf43
+
+	measure 'Rebased 100 (Indices)' =
+
+		lineageTag: 800333f2-e5ae-4bee-8a66-74c45162c6ca
+
+	partition Indices = m
+		mode: import
+		source =
+				// Query name : Indices            (LOAD: ON)  - latest level, change, 52W range, trend for every global index / commodity / FX / bond.
+				let
+				    Ok     = Table.SelectRows(StgIndices, each [Status] = "OK"),
+				    Calc   = Table.AddColumn(Ok, "T", each fnTechnicals([Chart]), type record),
+				    Slim   = Table.RemoveColumns(Calc, {"Chart", "Status"}),
+				    Names  = Record.FieldNames(fnTechnicals(Ok{0}[Chart])),
+				    Expand = Table.ExpandRecordColumn(Slim, "T", Names, Names),
+				    Types  = Table.TransformColumnTypes(Expand, {
+				                {"Price", type number}, {"PrevClose", type number}, {"DayChange", type number}, {"DayChangePct", type number},
+				                {"High52", type number}, {"Low52", type number}, {"PctFromLow", type number}, {"PctFromHigh", type number}, {"Range52Pos", type number},
+				                {"Sma50", type number}, {"Sma200", type number}, {"Trend", type text}, {"Rsi14", type number},
+				                {"Ret1M", type number}, {"Ret3M", type number}, {"Ret6M", type number}, {"Ret1Y", type number}, {"RetYtd", type number},
+				                {"Volatility", type number}, {"LastTradeTime", type datetime}, {"LastDate", type date}})
+				in
+				    Types
+
+	annotation PBI_ResultType = Table

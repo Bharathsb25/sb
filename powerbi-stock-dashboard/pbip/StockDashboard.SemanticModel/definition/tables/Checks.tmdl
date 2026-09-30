@@ -1,0 +1,55 @@
+table Checks
+	lineageTag: 0ce4502b-588c-4209-9bf7-4f93f6e5963d
+
+	column Symbol
+		dataType: string
+		lineageTag: 7bb9c003-e49f-4595-987e-6d13c47b3db5
+		summarizeBy: none
+		sourceColumn: Symbol
+
+	column Result
+		dataType: string
+		lineageTag: 5e600760-6e96-46ec-98d9-b11bd30918d2
+		summarizeBy: none
+		sourceColumn: Result
+
+	column Check
+		dataType: string
+		lineageTag: 751ef532-25a8-4680-bd33-bb877e1c1a67
+		summarizeBy: none
+		sourceColumn: Check
+
+	column Pillar
+		dataType: string
+		lineageTag: 677a07a7-a123-44d9-bf69-d959689fc51b
+		summarizeBy: none
+		sourceColumn: Pillar
+
+	column Sort
+		dataType: int64
+		lineageTag: a4ce5ba9-2887-4006-a08e-45f25bd84a4c
+		summarizeBy: none
+		sourceColumn: Sort
+
+	partition Checks = m
+		mode: import
+		source =
+				// Query name : Checks             (LOAD: ON)  - thesis checklist in long form (one row per stock x test) for the Deep-Dive matrix.
+				let
+				    Src   = Table.SelectColumns(Scorecard, {"Symbol", "Chk_Valuation", "Chk_ROE", "Chk_Debt", "Chk_EarningsGrowth", "Chk_Above200DMA", "Chk_RSI", "Chk_AnalystUpside", "Chk_MarginOfSafety"}),
+				    Unpiv = Table.UnpivotOtherColumns(Src, {"Symbol"}, "CheckKey", "Result"),
+				    Names = #table(type table [CheckKey = text, Check = text, Pillar = text, Sort = Int64.Type], {
+				                {"Chk_Valuation", "P/E below sector median", "Valuation", 1},
+				                {"Chk_ROE", "ROE >= 15%", "Quality", 2},
+				                {"Chk_Debt", "Debt/Equity <= 1x", "Quality", 3},
+				                {"Chk_EarningsGrowth", "Earnings growing", "Growth", 4},
+				                {"Chk_Above200DMA", "Price above 200-DMA", "Momentum", 5},
+				                {"Chk_RSI", "RSI between 30 and 70", "Momentum", 6},
+				                {"Chk_AnalystUpside", "Analyst upside >= 10%", "Analyst", 7},
+				                {"Chk_MarginOfSafety", ">= 15% below 52W high", "Value", 8}}),
+				    Join  = Table.ExpandTableColumn(Table.NestedJoin(Unpiv, {"CheckKey"}, Names, {"CheckKey"}, "N", JoinKind.LeftOuter), "N", {"Check", "Pillar", "Sort"}),
+				    Out   = Table.RemoveColumns(Join, {"CheckKey"})
+				in
+				    Out
+
+	annotation PBI_ResultType = Table

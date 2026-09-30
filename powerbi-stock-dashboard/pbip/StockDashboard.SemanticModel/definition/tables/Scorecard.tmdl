@@ -1,0 +1,1158 @@
+table Scorecard
+	lineageTag: 7e3a6741-5f01-41df-a0a1-6cb35f9781fe
+
+	column Symbol
+		dataType: string
+		lineageTag: 3a069066-83b9-4747-9b8b-f10120636e21
+		summarizeBy: none
+		sourceColumn: Symbol
+
+	column Name
+		dataType: string
+		lineageTag: c3738dc1-8999-41bc-ae2a-3c1d85b7e0a7
+		summarizeBy: none
+		sourceColumn: Name
+
+	column Sector
+		dataType: string
+		lineageTag: ce52dd59-3f8e-418d-81b0-a47108bc44ab
+		summarizeBy: none
+		sourceColumn: Sector
+
+	column Price
+		dataType: double
+		lineageTag: b53355e1-1b5a-4071-9d72-657b77b4cef9
+		summarizeBy: none
+		sourceColumn: Price
+
+	column PrevClose
+		dataType: double
+		lineageTag: a8051e49-039d-428d-b95d-ad731fca38bb
+		summarizeBy: none
+		sourceColumn: PrevClose
+
+	column DayChange
+		dataType: double
+		lineageTag: 4be4df82-77ab-4612-8767-d94b46d0e627
+		summarizeBy: none
+		sourceColumn: DayChange
+
+	column DayChangePct
+		dataType: double
+		lineageTag: 00b36550-ed04-4f75-945e-81454cbd53c4
+		summarizeBy: none
+		sourceColumn: DayChangePct
+
+	column High52
+		dataType: double
+		lineageTag: 6d7084ce-6a22-4132-a2e1-9ec41562921c
+		summarizeBy: none
+		sourceColumn: High52
+
+	column Low52
+		dataType: double
+		lineageTag: 2d1f3c09-e9d4-4b44-907b-dab5d0b3a357
+		summarizeBy: none
+		sourceColumn: Low52
+
+	column High52Candles
+		dataType: double
+		lineageTag: 2f643cb0-e6b0-43d3-9378-cd063c3b833e
+		summarizeBy: none
+		sourceColumn: High52Candles
+
+	column Low52Candles
+		dataType: double
+		lineageTag: 569b88c7-d03e-400e-a08c-3d4f9e4c81a1
+		summarizeBy: none
+		sourceColumn: Low52Candles
+
+	column PctFromLow
+		dataType: double
+		lineageTag: 2165be12-a422-430f-b8f6-59443230d2cf
+		summarizeBy: none
+		sourceColumn: PctFromLow
+
+	column PctFromHigh
+		dataType: double
+		lineageTag: 40508464-258a-4308-9aaf-a31907913b77
+		summarizeBy: none
+		sourceColumn: PctFromHigh
+
+	column Range52Pos
+		dataType: double
+		lineageTag: 5bf25912-a9bb-496a-bc28-bf72d7bb1065
+		summarizeBy: none
+		sourceColumn: Range52Pos
+
+	column Sma50
+		dataType: double
+		lineageTag: d5af89d9-871c-4d1a-8a64-9ec86510ace5
+		summarizeBy: none
+		sourceColumn: Sma50
+
+	column Sma200
+		dataType: double
+		lineageTag: c42d16f2-f2af-44f7-a6be-612d93e9226b
+		summarizeBy: none
+		sourceColumn: Sma200
+
+	column Rsi14
+		dataType: double
+		lineageTag: 0cdfa33a-72bf-4846-8c56-d331a8fff620
+		summarizeBy: none
+		sourceColumn: Rsi14
+
+	column Ret1M
+		dataType: double
+		lineageTag: 7183a3fc-13e1-47a1-8ac6-67319f3a82cc
+		summarizeBy: none
+		sourceColumn: Ret1M
+
+	column Ret3M
+		dataType: double
+		lineageTag: 762a897b-862b-4d39-8b78-f5e422d0b81f
+		summarizeBy: none
+		sourceColumn: Ret3M
+
+	column Ret6M
+		dataType: double
+		lineageTag: 72e7a838-88b5-46a5-a491-1348e02b0153
+		summarizeBy: none
+		sourceColumn: Ret6M
+
+	column Ret1Y
+		dataType: double
+		lineageTag: 06fd140c-970d-411f-8ea5-e4e51f070a26
+		summarizeBy: none
+		sourceColumn: Ret1Y
+
+	column RetYtd
+		dataType: double
+		lineageTag: 7828227c-1c01-44bb-a046-d6b6083a9d94
+		summarizeBy: none
+		sourceColumn: RetYtd
+
+	column Volatility
+		dataType: double
+		lineageTag: c197f5f8-70b1-4a06-845b-6039c300593f
+		summarizeBy: none
+		sourceColumn: Volatility
+
+	column Volume
+		dataType: double
+		lineageTag: 27023790-c797-4f68-9093-e4ea6e5f3c1d
+		summarizeBy: none
+		sourceColumn: Volume
+
+	column AvgVolume20
+		dataType: double
+		lineageTag: 3a626bea-4606-49cd-bf29-ccd3cd83064c
+		summarizeBy: none
+		sourceColumn: AvgVolume20
+
+	column VolumeRatio
+		dataType: double
+		lineageTag: cb22a183-8c62-477c-9daf-814fdd0e778b
+		summarizeBy: none
+		sourceColumn: VolumeRatio
+
+	column Above50
+		dataType: boolean
+		lineageTag: 176690ac-7d39-4619-a086-4dc880833cfc
+		summarizeBy: none
+		sourceColumn: Above50
+
+	column Above200
+		dataType: boolean
+		lineageTag: 208947e3-c253-4f7b-9b4b-fc6652afcbfa
+		summarizeBy: none
+		sourceColumn: Above200
+
+	column Trend
+		dataType: string
+		lineageTag: a90fc89b-f9fc-436d-a0f6-dd0f6bd95bac
+		summarizeBy: none
+		sourceColumn: Trend
+
+	column Currency
+		dataType: string
+		lineageTag: 9db17670-9702-40cc-899f-ba5e89e94e16
+		summarizeBy: none
+		sourceColumn: Currency
+
+	column Exchange
+		dataType: string
+		lineageTag: 3450fbd7-232a-4f80-b0bc-fb59c70f1358
+		summarizeBy: none
+		sourceColumn: Exchange
+
+	column LongName
+		dataType: string
+		lineageTag: 20e4812d-ef0d-44ec-8d84-aa2d591d38e6
+		summarizeBy: none
+		sourceColumn: LongName
+
+	column LastTradeTime
+		dataType: dateTime
+		lineageTag: 82077b65-25b7-492b-aaa9-6656fd89d8ce
+		summarizeBy: none
+		sourceColumn: LastTradeTime
+
+	column LastDate
+		dataType: dateTime
+		lineageTag: 540433e6-24d7-4214-8448-83bc5c6b230c
+		summarizeBy: none
+		sourceColumn: LastDate
+
+	column HistRows
+		dataType: int64
+		lineageTag: e5dc12e9-b069-495e-9907-38a0d9a71e7e
+		summarizeBy: none
+		sourceColumn: HistRows
+
+	column MarketCap
+		dataType: double
+		lineageTag: 42abed4a-3d09-45bd-9e43-42d2324983a8
+		summarizeBy: none
+		sourceColumn: MarketCap
+
+	column PE
+		dataType: double
+		lineageTag: 270b8a21-691e-440f-986d-5babae37f383
+		summarizeBy: none
+		sourceColumn: PE
+
+	column ForwardPE
+		dataType: double
+		lineageTag: d80e8767-75d9-44d3-9636-c92acd9b57c8
+		summarizeBy: none
+		sourceColumn: ForwardPE
+
+	column PB
+		dataType: double
+		lineageTag: 0907a6d6-acde-4e6a-8267-d7e9147be6c2
+		summarizeBy: none
+		sourceColumn: PB
+
+	column PEG
+		dataType: double
+		lineageTag: a44d5c49-e40c-4295-9775-c360aa4d1a32
+		summarizeBy: none
+		sourceColumn: PEG
+
+	column EPS
+		dataType: double
+		lineageTag: d5657793-d52f-44ab-96c9-a0d929cb4f1a
+		summarizeBy: none
+		sourceColumn: EPS
+
+	column ROE
+		dataType: double
+		lineageTag: 86893cb3-117d-46ed-93a9-9e2752572c8f
+		summarizeBy: none
+		sourceColumn: ROE
+
+	column ROA
+		dataType: double
+		lineageTag: a2ac23cc-2b16-427c-a283-969a5fb41a80
+		summarizeBy: none
+		sourceColumn: ROA
+
+	column ProfitMargin
+		dataType: double
+		lineageTag: 5cc87d57-4f81-479f-bd35-9c767ae46458
+		summarizeBy: none
+		sourceColumn: ProfitMargin
+
+	column OperatingMargin
+		dataType: double
+		lineageTag: 0ca326b4-feeb-4eee-893c-8ba2ab52eab3
+		summarizeBy: none
+		sourceColumn: OperatingMargin
+
+	column RevenueGrowth
+		dataType: double
+		lineageTag: abd8cc4f-1127-4261-bfff-4ec47c7c1ada
+		summarizeBy: none
+		sourceColumn: RevenueGrowth
+
+	column EarningsGrowth
+		dataType: double
+		lineageTag: ad18f247-91ae-4b46-876b-f0de07197b1e
+		summarizeBy: none
+		sourceColumn: EarningsGrowth
+
+	column DebtToEquityPct
+		dataType: double
+		lineageTag: dfa974b6-876b-43b0-b668-4586c68ce799
+		summarizeBy: none
+		sourceColumn: DebtToEquityPct
+
+	column CurrentRatio
+		dataType: double
+		lineageTag: 0e6cdf15-0043-40dc-9fa5-1915ea65f239
+		summarizeBy: none
+		sourceColumn: CurrentRatio
+
+	column FreeCashFlow
+		dataType: double
+		lineageTag: c036bd83-6f46-4950-bbdc-c90846ea6445
+		summarizeBy: none
+		sourceColumn: FreeCashFlow
+
+	column Beta
+		dataType: double
+		lineageTag: 3884a971-1894-46ad-a26c-7d62c77bb2ff
+		summarizeBy: none
+		sourceColumn: Beta
+
+	column DividendYield
+		dataType: double
+		lineageTag: 3813b594-00da-48c4-9fcc-ffc3ee780e0a
+		summarizeBy: none
+		sourceColumn: DividendYield
+
+	column PayoutRatio
+		dataType: double
+		lineageTag: 6f95079a-f722-4a82-8dd8-9808ca77df4e
+		summarizeBy: none
+		sourceColumn: PayoutRatio
+
+	column TargetMean
+		dataType: double
+		lineageTag: ab1f19b6-3b10-4b4a-a662-8139388b4d70
+		summarizeBy: none
+		sourceColumn: TargetMean
+
+	column TargetMedian
+		dataType: double
+		lineageTag: 268d3b94-0366-421b-af6e-0f19a78ce266
+		summarizeBy: none
+		sourceColumn: TargetMedian
+
+	column TargetHigh
+		dataType: double
+		lineageTag: 0079c4e3-ba97-4198-b14f-b78f34b80336
+		summarizeBy: none
+		sourceColumn: TargetHigh
+
+	column TargetLow
+		dataType: double
+		lineageTag: e7baa601-cc1c-4941-9cb4-35b4e506bd24
+		summarizeBy: none
+		sourceColumn: TargetLow
+
+	column AnalystCount
+		dataType: double
+		lineageTag: 2f090777-1ed2-4f31-9f91-363b5ce775cf
+		summarizeBy: none
+		sourceColumn: AnalystCount
+
+	column RecMean
+		dataType: double
+		lineageTag: 44ad0dfb-ca1a-4343-abac-18941a26da90
+		summarizeBy: none
+		sourceColumn: RecMean
+
+	column VotesStrongBuy
+		dataType: double
+		lineageTag: 75622aec-6cf1-4f0c-9659-319c5380cb2d
+		summarizeBy: none
+		sourceColumn: VotesStrongBuy
+
+	column VotesBuy
+		dataType: double
+		lineageTag: cc232c39-2528-4a88-a7a3-54cda97178f9
+		summarizeBy: none
+		sourceColumn: VotesBuy
+
+	column VotesHold
+		dataType: double
+		lineageTag: 601c5d3a-9ee3-49fb-bac3-894e7e4b59e1
+		summarizeBy: none
+		sourceColumn: VotesHold
+
+	column VotesSell
+		dataType: double
+		lineageTag: 0ce6eb4f-aa29-411e-9175-722fc1907d60
+		summarizeBy: none
+		sourceColumn: VotesSell
+
+	column VotesStrongSell
+		dataType: double
+		lineageTag: 67254023-a473-4e4d-9ef5-29f03288eb5b
+		summarizeBy: none
+		sourceColumn: VotesStrongSell
+
+	column InsiderHolding
+		dataType: double
+		lineageTag: 7205542f-7ad4-40e0-95ec-86b6a3f65f46
+		summarizeBy: none
+		sourceColumn: InsiderHolding
+
+	column InstitutionHolding
+		dataType: double
+		lineageTag: a26c895d-8901-449c-9a5d-8fa29af09098
+		summarizeBy: none
+		sourceColumn: InstitutionHolding
+
+	column FundStatus
+		dataType: string
+		lineageTag: e22dc2c0-7567-42af-8b55-fb55faba9fbc
+		summarizeBy: none
+		sourceColumn: FundStatus
+
+	column FundSource
+		dataType: string
+		lineageTag: 7648c256-b381-496e-a693-424bc1af9371
+		summarizeBy: none
+		sourceColumn: FundSource
+
+	column Industry
+		dataType: string
+		lineageTag: 56f3814c-4946-449e-82ca-52d20429f690
+		summarizeBy: none
+		sourceColumn: Industry
+
+	column RecKey
+		dataType: string
+		lineageTag: 074a3c3d-fe5e-4372-83cb-c131c03dc3ea
+		summarizeBy: none
+		sourceColumn: RecKey
+
+	column NewsSentiment
+		dataType: double
+		lineageTag: 0a82171a-af27-483d-a65a-fe4eb22664ee
+		summarizeBy: none
+		sourceColumn: NewsSentiment
+
+	column NewsCount
+		dataType: int64
+		lineageTag: 69f725d6-56b9-4259-b5cf-c185cbdc4cc6
+		summarizeBy: none
+		sourceColumn: NewsCount
+
+	column SectorPE
+		dataType: double
+		lineageTag: 01419a0b-657c-43e4-8576-c66cccd034ea
+		summarizeBy: none
+		sourceColumn: SectorPE
+
+	column HeatSize
+		dataType: double
+		lineageTag: 0f941d59-ac3e-42c3-b9b9-25532c497385
+		summarizeBy: none
+		sourceColumn: HeatSize
+
+	column DebtToEquity
+		dataType: double
+		lineageTag: 4413b2bf-1368-4531-b529-7d33e09b9e8e
+		summarizeBy: none
+		sourceColumn: DebtToEquity
+
+	column PEvsSector
+		dataType: double
+		lineageTag: dce00011-ec80-42b8-b9ca-9cf3e1da0de1
+		summarizeBy: none
+		sourceColumn: PEvsSector
+
+	column UpsidePct
+		dataType: double
+		lineageTag: 33fe0e14-ec6c-45e6-9c54-2420a8463a4b
+		summarizeBy: none
+		sourceColumn: UpsidePct
+
+	column ValuationScore
+		dataType: double
+		lineageTag: 5de79699-0f5a-4fc8-ba56-29909a95605c
+		summarizeBy: none
+		sourceColumn: ValuationScore
+
+	column QualityScore
+		dataType: double
+		lineageTag: f9979c79-5cbc-4fc4-a2e3-6ea158732793
+		summarizeBy: none
+		sourceColumn: QualityScore
+
+	column GrowthScore
+		dataType: double
+		lineageTag: 78c777e5-f4f0-4c29-9226-b448e61233ac
+		summarizeBy: none
+		sourceColumn: GrowthScore
+
+	column MomentumScore
+		dataType: double
+		lineageTag: 69ff8444-710c-4cd9-aa39-35c0dcaf66f4
+		summarizeBy: none
+		sourceColumn: MomentumScore
+
+	column AnalystScore
+		dataType: double
+		lineageTag: 50c8190e-a557-4b4d-a8bf-06e1ecfdcb34
+		summarizeBy: none
+		sourceColumn: AnalystScore
+
+	column Composite
+		dataType: double
+		lineageTag: 30a5ec13-a6b0-4ca4-b6ab-d75b15f9978b
+		summarizeBy: none
+		sourceColumn: Composite
+
+	column PassRate
+		dataType: double
+		lineageTag: ac369793-1591-4d16-bb7e-f05d474049c6
+		summarizeBy: none
+		sourceColumn: PassRate
+
+	column StopPct
+		dataType: double
+		lineageTag: 3df3870b-eed7-4980-9e15-42b88818b57b
+		summarizeBy: none
+		sourceColumn: StopPct
+
+	column StopLoss
+		dataType: double
+		lineageTag: 7a511736-de9f-4242-9efe-9e343e60b49d
+		summarizeBy: none
+		sourceColumn: StopLoss
+
+	column RiskReward
+		dataType: double
+		lineageTag: d20700a4-7f31-4a93-84c1-d98cbae7841e
+		summarizeBy: none
+		sourceColumn: RiskReward
+
+	column FundCoverage
+		dataType: double
+		lineageTag: 22e0fa49-4f32-4f49-a34e-9aefcb2fee55
+		summarizeBy: none
+		sourceColumn: FundCoverage
+
+	column Rating
+		dataType: string
+		lineageTag: 170cac72-392a-4c8e-885b-06c40b06a9db
+		summarizeBy: none
+		sourceColumn: Rating
+		sortByColumn: 'Rating Sort'
+
+	column TechRating
+		dataType: string
+		lineageTag: 5daaabb3-ab87-4411-b0f7-e0d2e7f7ff7a
+		summarizeBy: none
+		sourceColumn: TechRating
+
+	column Risk
+		dataType: string
+		lineageTag: fa49fbb0-5a5d-480b-9269-0904d5ac424b
+		summarizeBy: none
+		sourceColumn: Risk
+		sortByColumn: 'Risk Sort'
+
+	column ChecksPassed
+		dataType: int64
+		lineageTag: ef9cf406-eff2-430c-bde2-80023110c911
+		summarizeBy: none
+		sourceColumn: ChecksPassed
+
+	column ChecksEvaluated
+		dataType: int64
+		lineageTag: 9998c1d4-5c7f-454d-b140-4ef9a3e70c8e
+		summarizeBy: none
+		sourceColumn: ChecksEvaluated
+
+	column ChecksText
+		dataType: string
+		lineageTag: 157dd320-10d1-4893-97c1-431ee116c239
+		summarizeBy: none
+		sourceColumn: ChecksText
+
+	column FailedChecks
+		dataType: string
+		lineageTag: 13623b16-0c89-402a-afef-6085266ca4c1
+		summarizeBy: none
+		sourceColumn: FailedChecks
+
+	column Signals
+		dataType: string
+		lineageTag: b103ebd8-876a-40e3-adca-659b526bf2df
+		summarizeBy: none
+		sourceColumn: Signals
+
+	column Chk_Valuation
+		dataType: string
+		lineageTag: a0332e94-7ccd-4397-8909-ab46e6b0ddc6
+		summarizeBy: none
+		sourceColumn: Chk_Valuation
+
+	column Chk_ROE
+		dataType: string
+		lineageTag: 2b2f6260-50ea-4efd-b9e6-bc291e773f5c
+		summarizeBy: none
+		sourceColumn: Chk_ROE
+
+	column Chk_Debt
+		dataType: string
+		lineageTag: 6d50702c-44ae-4a00-a66b-4fbe85ca06f3
+		summarizeBy: none
+		sourceColumn: Chk_Debt
+
+	column Chk_EarningsGrowth
+		dataType: string
+		lineageTag: 0fd01d14-4a07-44bc-9746-245e8adf89d9
+		summarizeBy: none
+		sourceColumn: Chk_EarningsGrowth
+
+	column Chk_Above200DMA
+		dataType: string
+		lineageTag: 391b75af-eea3-4943-9fb6-cbfe533fc08b
+		summarizeBy: none
+		sourceColumn: Chk_Above200DMA
+
+	column Chk_RSI
+		dataType: string
+		lineageTag: df15ec51-348f-481b-a7bd-ca9fb09cf2e5
+		summarizeBy: none
+		sourceColumn: Chk_RSI
+
+	column Chk_AnalystUpside
+		dataType: string
+		lineageTag: c5599d74-90bf-46ac-90c7-05088e994df4
+		summarizeBy: none
+		sourceColumn: Chk_AnalystUpside
+
+	column Chk_MarginOfSafety
+		dataType: string
+		lineageTag: 1a448f9d-b572-4ea3-aa75-4e96aba3fa91
+		summarizeBy: none
+		sourceColumn: Chk_MarginOfSafety
+
+	column 'Rating Sort' =
+			SWITCH (
+			    Scorecard[Rating],
+			    "Strong Buy", 1,
+			    "Buy", 2,
+			    "Accumulate", 3,
+			    "Hold / Watch", 4,
+			    "Avoid", 5,
+			    6
+			)
+		dataType: int64
+		lineageTag: d54eadcc-0773-4305-81d8-c6e7d970a889
+		summarizeBy: none
+
+	column 'Risk Sort' =
+			SWITCH ( Scorecard[Risk], "Low", 1, "Medium", 2, "High", 3, 4 )
+		dataType: int64
+		lineageTag: bde6988f-97d0-433a-a81d-19d46e30b689
+		summarizeBy: none
+
+	column 'Cap Bucket' =
+
+		dataType: string
+		lineageTag: 16a37491-85bb-4ac9-bd43-5437b8b70376
+		summarizeBy: none
+
+	measure 'VAR cr' =
+			Scorecard[MarketCap] / 10000000        -- INR crore
+			RETURN
+			    SWITCH (
+			        TRUE (),
+			        ISBLANK ( Scorecard[MarketCap] ), "Unknown",
+			        cr >= 100000, "Mega (> 1L Cr)",
+			        cr >= 30000, "Large (30k-1L Cr)",
+			        cr >= 8000, "Mid (8k-30k Cr)",
+			        "Small (< 8k Cr)"
+			    )
+		lineageTag: 6651e859-4599-441a-819f-05a6b9d8217b
+
+	measure 'Stocks Tracked' =
+			COUNTROWS ( Scorecard )
+		lineageTag: 7585b181-6637-4bf3-a1c1-1167a0beea6a
+
+	measure Advancers =
+			CALCULATE ( COUNTROWS ( Scorecard ), Scorecard[DayChangePct] > 0 )
+		lineageTag: d52b1f7a-604f-4e3e-833d-685313f717e4
+
+	measure Decliners =
+			CALCULATE ( COUNTROWS ( Scorecard ), Scorecard[DayChangePct] < 0 )
+		lineageTag: 0b39adde-8711-46d3-8ac5-2cdf0cfe1ef7
+
+	measure Unchanged =
+			[Stocks Tracked] - [Advancers] - [Decliners]
+		lineageTag: a5bebd6f-0fbf-4cc2-a25b-79b69832c2e7
+
+	measure 'Breadth %' =
+			DIVIDE ( [Advancers], [Advancers] + [Decliners] )
+		formatString: 0.0%
+		lineageTag: 464b7c20-bf4f-4f41-b019-09a245f31bb4
+
+	measure 'Avg Day Change %' =
+			AVERAGE ( Scorecard[DayChangePct] )
+		formatString: 0.0%
+		lineageTag: 8c58fac3-8412-4a9d-9eee-ef7871615110
+
+	measure 'MCap Weighted Day Change %' =
+			DIVIDE (
+			    SUMX ( Scorecard, Scorecard[DayChangePct] * Scorecard[HeatSize] ),
+			    SUMX ( FILTER ( Scorecard, NOT ISBLANK ( Scorecard[DayChangePct] ) ), Scorecard[HeatSize] )
+			)
+		formatString: 0.0%
+		lineageTag: 7db3e3ea-bbab-43b0-be22-f647a68e1a8d
+
+	measure 'Market Mood' =
+			SWITCH (
+			    TRUE (),
+			    ISBLANK ( [Breadth %] ), "No data",
+			    [Breadth %] >= 0.65, "Bullish",
+			    [Breadth %] >= 0.45, "Neutral",
+			    "Bearish"
+			)
+		lineageTag: 2fd98522-3c48-42ce-85fc-7b4c17059c41
+
+	measure 'Market Mood Color' =
+			SWITCH ( [Market Mood], "Bullish", "#22B07D", "Neutral", "#E0B441", "Bearish", "#D9503F", "#8A94A6" )
+
+			// Field-value colour for the heat-map treemap / matrix  (Format > Colors > fx > Format style: Field value)
+		lineageTag: 50b8e61f-4783-4f51-8471-531d53cf7c88
+
+	measure 'Heat Color' =
+
+		lineageTag: 7a4e9bd4-b68e-4ced-bbaa-167988ef8e14
+
+	measure 'VAR c' =
+			AVERAGE ( Scorecard[DayChangePct] )
+			RETURN
+			    SWITCH (
+			        TRUE (),
+			        ISBLANK ( c ), "#3A4454",
+			        c >= 0.03, "#0B8F5F",
+			        c >= 0.015, "#22B07D",
+			        c >= 0.0025, "#6CCBA5",
+			        c > -0.0025, "#5D6778",
+			        c > -0.015, "#E58C7E",
+			        c > -0.03, "#D9503F",
+			        "#B3261E"
+			    )
+
+			//  52-WEEK LOW / HIGH RADAR  (table: Scorecard)
+			//  NB: DAX treats BLANK as 0 in comparisons, so blanks are excluded explicitly.
+			Near 52W Low (<=10%) =
+			CALCULATE (
+			    COUNTROWS ( Scorecard ),
+			    FILTER ( Scorecard, NOT ISBLANK ( Scorecard[PctFromLow] ) && Scorecard[PctFromLow] <= 0.10 )
+			)
+
+			Near 52W High (<=3%) =
+			CALCULATE (
+			    COUNTROWS ( Scorecard ),
+			    FILTER ( Scorecard, NOT ISBLANK ( Scorecard[PctFromHigh] ) && Scorecard[PctFromHigh] >= -0.03 )
+			)
+		lineageTag: ce8aeea7-ecd6-4eaa-be0b-9ba3bae3de7d
+
+	measure 'Deep Discount (>30% off high)' =
+			CALCULATE (
+			    COUNTROWS ( Scorecard ),
+			    FILTER ( Scorecard, NOT ISBLANK ( Scorecard[PctFromHigh] ) && Scorecard[PctFromHigh] <= -0.30 )
+			)
+		lineageTag: 465b2c5f-7e79-4767-b267-f770799aec8e
+
+	measure 'Quality Near 52W Low' =
+			CALCULATE (
+			    COUNTROWS ( Scorecard ),
+			    FILTER (
+			        Scorecard,
+			        NOT ISBLANK ( Scorecard[PctFromLow] ) && Scorecard[PctFromLow] <= 0.15
+			            && NOT ISBLANK ( Scorecard[QualityScore] ) && Scorecard[QualityScore] >= 60
+			    )
+			)
+		lineageTag: b289035e-c470-4f74-af1e-bdcb65f1f239
+
+	measure 'Avg Distance From 52W High' =
+			AVERAGE ( Scorecard[PctFromHigh] )
+		lineageTag: 877cb46b-8f6e-4030-8196-aa1671f4d93f
+
+	measure 'Buy Signals' =
+			CALCULATE ( COUNTROWS ( Scorecard ), Scorecard[Rating] IN { "Strong Buy", "Buy" } )
+		lineageTag: 6300f134-a5e3-4f62-afb3-bc8c59b0c3c4
+
+	measure 'Avoid Signals' =
+			CALCULATE ( COUNTROWS ( Scorecard ), Scorecard[Rating] = "Avoid" )
+		lineageTag: f9926605-9ddb-4574-9053-d9e297799b1f
+
+	measure 'Value + Quality Picks' =
+			CALCULATE (
+			    COUNTROWS ( Scorecard ),
+			    FILTER (
+			        Scorecard,
+			        NOT ISBLANK ( Scorecard[ValuationScore] ) && Scorecard[ValuationScore] >= 70
+			            && NOT ISBLANK ( Scorecard[QualityScore] ) && Scorecard[QualityScore] >= 60
+			    )
+			)
+		lineageTag: 0c852eb9-e313-4595-90ad-277cac7b0339
+
+	measure 'Avg Analyst Upside %' =
+			AVERAGE ( Scorecard[UpsidePct] )
+		formatString: 0.0%
+		lineageTag: 08b8424e-6b99-4776-a5e5-ca51b300b923
+
+	measure 'Avg Composite Score' =
+			AVERAGE ( Scorecard[Composite] )
+		lineageTag: 5920064c-50a8-4c57-8442-2aa24773e5e3
+
+	measure 'Top Pick' =
+
+		lineageTag: f7943042-df5a-42f3-b977-cefaa8d65d13
+
+	measure 'VAR t' =
+			TOPN ( 1, FILTER ( Scorecard, NOT ISBLANK ( Scorecard[Composite] ) ), Scorecard[Composite], DESC )
+			RETURN MAXX ( t, Scorecard[Name] )
+		lineageTag: 8557429a-9a02-43fc-a756-0412603871af
+
+	measure 'Top Pick Score' =
+
+		lineageTag: cd007110-8ee5-42ba-944c-590d862bc9c9
+
+	measure 'VAR t' =
+			TOPN ( 1, FILTER ( Scorecard, NOT ISBLANK ( Scorecard[Composite] ) ), Scorecard[Composite], DESC )
+			RETURN MAXX ( t, Scorecard[Composite] )
+		lineageTag: de66aec7-61f0-46af-adfd-7016c7707d4c
+
+	measure 'Best Upside Pick' =
+
+		lineageTag: 2e414640-33ac-486c-934c-d1081d6deee8
+
+	measure 'VAR t' =
+			TOPN ( 1, FILTER ( Scorecard, NOT ISBLANK ( Scorecard[UpsidePct] ) && Scorecard[AnalystScore] >= 50 ), Scorecard[UpsidePct], DESC )
+			RETURN MAXX ( t, Scorecard[Name] )
+		lineageTag: 53313842-916a-4aaf-8de5-8897398d9905
+
+	measure 'Market Cap (Rs Cr)' =
+			DIVIDE ( SUM ( Scorecard[MarketCap] ), 10000000 )
+		lineageTag: 5b6b934e-1349-44de-b8e6-3eced480f335
+
+	measure 'Rating Color' =
+			SWITCH (
+			    SELECTEDVALUE ( Scorecard[Rating] ),
+			    "Strong Buy", "#0B8F5F",
+			    "Buy", "#22B07D",
+			    "Accumulate", "#6CCBA5",
+			    "Hold / Watch", "#E0B441",
+			    "Avoid", "#D9503F",
+			    "#8A94A6"
+			)
+		lineageTag: 9b292e84-f172-4feb-af79-3621ec20cbd0
+
+	measure 'Score Color' =
+
+		lineageTag: 7340705c-daf6-45af-aa21-ea8d35d1efbe
+
+	measure 'VAR s' =
+			AVERAGE ( Scorecard[Composite] )
+			RETURN
+			    SWITCH ( TRUE (), ISBLANK ( s ), "#3A4454", s >= 72, "#0B8F5F", s >= 62, "#22B07D", s >= 52, "#6CCBA5", s >= 42, "#E0B441", "#D9503F" )
+		lineageTag: dac892a3-d94d-4370-9ce0-abe0c5940bbd
+
+	measure 'Selected Stock' =
+			SELECTEDVALUE ( Scorecard[Name], "Select a stock" )
+		lineageTag: a9359e4d-274a-4e55-8e06-05d05315572c
+
+	measure 'Selected Verdict' =
+			SELECTEDVALUE ( Scorecard[Rating], "-" ) & "  |  Score " & FORMAT ( AVERAGE ( Scorecard[Composite] ), "0" ) & "/100  |  Checks " & SELECTEDVALUE ( Scorecard[ChecksText], "-" )
+		lineageTag: 88a0890f-e063-4741-85aa-47a751c19b9c
+
+	measure 'Analyst Target Range' =
+			IF (
+			    NOT ISBLANK ( MAX ( Scorecard[TargetMean] ) ),
+			    FORMAT ( MAX ( Scorecard[TargetLow] ), "#,##0" ) & "  -  " & FORMAT ( MAX ( Scorecard[TargetMean] ), "#,##0" ) & "  -  " & FORMAT ( MAX ( Scorecard[TargetHigh] ), "#,##0" ),
+			    "No analyst coverage"
+			)
+
+			// Price line-chart helpers (visual filtered to ONE stock through the relationship Scorecard -> Prices)
+		lineageTag: 3d0d8991-7b92-4a4f-bc8f-94b01f48a8a6
+
+	measure Close =
+			AVERAGE ( Prices[Close] )
+		lineageTag: 26a9294f-7f2b-426a-8f7f-c0550706de88
+
+	measure 'SMA 50' =
+
+		lineageTag: d1235ae1-ff8c-46b4-8187-7cf54cd2034e
+
+	measure 'VAR d' =
+			MAX ( Prices[Date] )
+		lineageTag: f7e5ec3d-b178-4610-bcf3-8d7c9508223b
+
+	measure 'VAR s' =
+			SELECTEDVALUE ( Prices[Symbol] )
+		lineageTag: c663ec2d-b0aa-478c-ac5b-b4a06a56bea7
+
+	measure 'VAR win' =
+			TOPN ( 50, FILTER ( ALL ( Prices ), Prices[Symbol] = s && Prices[Date] <= d ), Prices[Date], DESC )
+		lineageTag: 5ef7652f-ce36-4fd5-b0c1-755c1d9fdc33
+
+	measure 'RETURN IF ( COUNTROWS ( win )' =
+			50, AVERAGEX ( win, Prices[Close] ) )
+		lineageTag: 2cc43e74-91e1-43ba-a170-91cdd2c0ff4f
+
+	measure 'SMA 200' =
+
+		lineageTag: 4d4c3830-9a46-4dfd-b995-cbf4ec2310ab
+
+	measure 'VAR d' =
+			MAX ( Prices[Date] )
+		lineageTag: 6259e5b5-f8ac-433d-bd64-41ae19eeaf78
+
+	measure 'VAR s' =
+			SELECTEDVALUE ( Prices[Symbol] )
+		lineageTag: 7cb5f516-0c9e-4e57-9854-3b12c7dca424
+
+	measure 'VAR win' =
+			TOPN ( 200, FILTER ( ALL ( Prices ), Prices[Symbol] = s && Prices[Date] <= d ), Prices[Date], DESC )
+		lineageTag: d142e957-d615-41b8-81fe-9d9798eafdab
+
+	measure 'RETURN IF ( COUNTROWS ( win )' =
+			200, AVERAGEX ( win, Prices[Close] ) )
+
+			// Compare several stocks on one chart: every line starts at 100 on the first date in the slicer range
+		lineageTag: d575ac28-a4a2-46d7-8a0b-c912393cecbe
+
+	measure 'Rebased 100 (Stocks)' =
+
+		lineageTag: cbfc4225-1e1d-4de2-b83e-a1bbd97a8aea
+
+	measure 'VAR d0' =
+			CALCULATE ( MIN ( Prices[Date] ), ALLSELECTED ( Prices[Date] ) )
+		lineageTag: 9aaa8108-f2ec-4e35-ae5c-5056a568e9af
+
+	measure 'VAR p0' =
+			CALCULATE ( AVERAGE ( Prices[Close] ), Prices[Date] = d0 )
+			RETURN DIVIDE ( AVERAGE ( Prices[Close] ), p0 ) * 100
+		lineageTag: 320137b8-0924-418d-99b5-b47ebc589c7d
+
+	measure 'VAR vix' =
+			CALCULATE ( AVERAGE ( Indices[Price] ), Indices[Symbol] = "^VIX" )
+		lineageTag: b9008492-73d3-4a9a-a178-93a5511e480f
+
+	measure 'VAR ivix' =
+			CALCULATE ( AVERAGE ( Indices[Price] ), Indices[Symbol] = "^INDIAVIX" )
+		lineageTag: 528dc697-2c8d-4309-91a7-ff19f73844bf
+
+	measure 'VAR worst' =
+			MAX ( vix, ivix )
+			RETURN
+			    SWITCH ( TRUE (), ISBLANK ( worst ), "No data", worst >= 25, "Risk-OFF (fear)", worst >= 18, "Cautious", "Risk-ON (calm)" )
+		lineageTag: 46de2bf9-2c00-41ae-943c-8f846d419d1a
+
+	measure 'VAR c' =
+			AVERAGE ( Indices[DayChangePct] )
+			RETURN
+			    SWITCH (
+			        TRUE (),
+			        ISBLANK ( c ), "#3A4454",
+			        c >= 0.02, "#0B8F5F",
+			        c >= 0.01, "#22B07D",
+			        c >= 0.002, "#6CCBA5",
+			        c > -0.002, "#5D6778",
+			        c > -0.01, "#E58C7E",
+			        c > -0.02, "#D9503F",
+			        "#B3261E"
+			    )
+		lineageTag: b0919745-6d13-483a-9d96-f3e95d180ebd
+
+	measure 'VAR d0' =
+			CALCULATE ( MIN ( IndexPrices[Date] ), ALLSELECTED ( IndexPrices[Date] ) )
+		lineageTag: 216ac133-b650-4329-aece-71c70f46d8ec
+
+	measure 'VAR p0' =
+			CALCULATE ( AVERAGE ( IndexPrices[Close] ), IndexPrices[Date] = d0 )
+			RETURN DIVIDE ( AVERAGE ( IndexPrices[Close] ), p0 ) * 100
+		lineageTag: 9f7d7a69-ceb1-4a98-94c4-ef52bdd81a4d
+
+	partition Scorecard = m
+		mode: import
+		source =
+				// Query name : Scorecard          (LOAD: ON)  - THE main table: one row per stock with price, technicals, fundamentals,
+				// analyst targets, pillar scores, composite score, rating, thesis checklist, signals and an indicative trade plan.
+				// Scoring rules are documented in docs\METHODOLOGY.md. Edit the cut-offs / weights below to match your own style.
+				let
+				    // ---------- 1. join price data + fundamentals + news ----------
+				    FundCols = {"FundStatus", "FundSource", "FSector", "Industry", "RecKey", "MarketCap", "PE", "ForwardPE", "PB", "PEG", "EPS", "ROE", "ROA", "ProfitMargin", "OperatingMargin",
+				                "RevenueGrowth", "EarningsGrowth", "DebtToEquityPct", "CurrentRatio", "FreeCashFlow", "Beta", "DividendYield", "PayoutRatio",
+				                "TargetMean", "TargetMedian", "TargetHigh", "TargetLow", "AnalystCount", "RecMean", "VotesStrongBuy", "VotesBuy", "VotesHold", "VotesSell", "VotesStrongSell",
+				                "InsiderHolding", "InstitutionHolding"},
+				    J1       = Table.ExpandTableColumn(Table.NestedJoin(Quotes, {"Symbol"}, Fundamentals, {"Symbol"}, "F", JoinKind.LeftOuter), "F", FundCols),
+				    S1       = Table.AddColumn(J1, "SectorFinal", each if [FSector] <> null and [FSector] <> "" then [FSector] else [Sector], type text),
+				    S2       = Table.RenameColumns(Table.RemoveColumns(S1, {"Sector", "FSector"}), {{"SectorFinal", "Sector"}}),
+
+				    NewsAgg  = Table.Group(Table.SelectRows(News, each [Symbol] <> null and [Sentiment] <> null), {"Symbol"},
+				                    {{"NewsSentiment", each List.Average([Sentiment]), type number}, {"NewsCount", each Table.RowCount(_), Int64.Type}}),
+				    J2       = Table.ExpandTableColumn(Table.NestedJoin(S2, {"Symbol"}, NewsAgg, {"Symbol"}, "N", JoinKind.LeftOuter), "N", {"NewsSentiment", "NewsCount"}),
+
+				    // sector median P/E (positive earnings only; falls back to the whole-list median when a sector has < 3 names)
+				    PosPE    = Table.SelectRows(J2, each [PE] <> null and [PE] > 0),
+				    AllPE    = if Table.RowCount(PosPE) = 0 then null else List.Median(PosPE[PE]),
+				    PeBySec  = Table.Group(PosPE, {"Sector"}, {{"SectorPE0", each List.Median([PE]), type number}, {"SectorN", each Table.RowCount(_), Int64.Type}}),
+				    J3       = Table.ExpandTableColumn(Table.NestedJoin(J2, {"Sector"}, PeBySec, {"Sector"}, "P", JoinKind.LeftOuter), "P", {"SectorPE0", "SectorN"}),
+				    J4       = Table.AddColumn(J3, "SectorPE", each if [SectorN] <> null and [SectorN] >= 3 then [SectorPE0] else AllPE, type nullable number),
+				    Caps     = List.RemoveNulls(J4[MarketCap]),
+				    MedCap   = if List.Count(Caps) = 0 then 1 else List.Median(Caps),
+				    J5       = Table.AddColumn(J4, "HeatSize", each if [MarketCap] = null then MedCap else [MarketCap], type number),
+				    Base     = Table.RemoveColumns(J5, {"SectorPE0", "SectorN"}),
+
+				    // ---------- 2. scoring helpers ----------
+				    // Grade: score = scores{ number of cut-offs that x has reached }   (scores has one more item than cuts)
+				    Grade = (x as nullable number, cuts as list, scores as list) as nullable number =>
+				        if x = null then null else scores{List.Count(List.Select(cuts, each x >= _))},
+				    // Weighted mean that ignores missing (null) pillars/metrics
+				    WMean = (pairs as list) as nullable number =>
+				        let
+				            V = List.Select(pairs, each _{0} <> null),
+				            W = List.Sum(List.Transform(V, each _{1}))
+				        in
+				            if List.Count(V) = 0 then null else List.Sum(List.Transform(V, each _{0} * _{1})) / W,
+				    Sym   = (b as nullable logical, yes as number, no as number) as nullable number => if b = null then null else if b then yes else no,
+				    CK    = (b as nullable logical) as text => if b = null then "n/a" else if b then "Pass" else "Fail",
+
+				    ScoreRow = (r as record) as record =>
+				        let
+				            price   = r[Price],
+				            isFin   = r[Sector] = "Financial Services",
+				            pe      = r[PE],
+				            secPE   = r[SectorPE],
+				            peRel   = if pe = null or secPE = null or secPE = 0 then null else pe / secPE,
+				            de      = if r[DebtToEquityPct] = null then null else r[DebtToEquityPct] / 100,
+				            vol     = r[Volatility],
+				            enough  = r[AnalystCount] <> null and r[AnalystCount] >= 3,
+				            upside  = if r[TargetMean] = null or price = null or price = 0 then null else r[TargetMean] / price - 1,
+
+				            // pillar 1: valuation (25%)
+				            peScore  = if pe = null then null else if pe <= 0 then 10 else Grade(peRel, {0.8, 1.0, 1.25, 1.6}, {100, 80, 55, 30, 10}),
+				            pbScore  = if r[PB] = null then null else if r[PB] <= 0 then 10 else Grade(r[PB], {1.5, 3, 6, 10}, {100, 80, 55, 30, 10}),
+				            pegScore = if r[PEG] = null or r[PEG] <= 0 then null else Grade(r[PEG], {1, 1.5, 2, 3}, {100, 80, 55, 30, 10}),
+				            valuation = WMean({{peScore, 2}, {pbScore, 1}, {pegScore, 1}}),
+
+				            // pillar 2: quality / balance sheet (25%)
+				            roeScore = Grade(r[ROE], {0.05, 0.10, 0.15, 0.20}, {10, 30, 55, 80, 100}),
+				            pmScore  = Grade(r[ProfitMargin], {0.03, 0.08, 0.15, 0.25}, {10, 30, 55, 80, 100}),
+				            deScore  = if isFin then null else Grade(de, {0.3, 0.7, 1.2, 2.0}, {100, 80, 55, 30, 10}),
+				            crScore  = if isFin then null else Grade(r[CurrentRatio], {0.8, 1.2, 1.8}, {10, 40, 70, 90}),
+				            quality  = WMean({{roeScore, 2}, {pmScore, 1}, {deScore, 1}, {crScore, 0.5}}),
+
+				            // pillar 3: growth (15%)
+				            growth   = WMean({{Grade(r[RevenueGrowth], {0, 0.05, 0.10, 0.20}, {10, 30, 55, 80, 100}), 1},
+				                              {Grade(r[EarningsGrowth], {-0.10, 0, 0.10, 0.25}, {10, 30, 55, 80, 100}), 1.5}}),
+
+				            // pillar 4: momentum / trend (15%)  - works without fundamentals
+				            momentum = WMean({{Sym(r[Above200], 100, 25), 2},
+				                              {Sym(r[Above50], 100, 35), 1},
+				                              {Grade(r[Ret3M], {-0.10, 0, 0.05, 0.15}, {15, 35, 55, 80, 95}), 1.5},
+				                              {Grade(r[Rsi14], {30, 40, 50, 65, 75}, {60, 45, 65, 90, 60, 30}), 1}}),
+
+				            // pillar 5: analyst consensus (20%) - needs >= 3 analysts
+				            analyst  = if not enough then null
+				                       else WMean({{Grade(upside, {0, 0.08, 0.15, 0.25}, {10, 40, 65, 85, 100}), 2},
+				                                   {Grade(r[RecMean], {1.75, 2.25, 2.75, 3.5}, {100, 85, 60, 35, 10}), 1.5}}),
+
+				            pillars   = {{valuation, 25}, {quality, 25}, {growth, 15}, {momentum, 15}, {analyst, 20}},
+				            nPillars  = List.Count(List.Select(pillars, each _{0} <> null)),
+				            composite = if nPillars >= 3 then WMean(pillars) else null,
+
+				            // thesis checklist (8 yes/no tests)
+				            c1 = if pe = null or secPE = null then null else pe > 0 and pe < secPE,
+				            c2 = if r[ROE] = null then null else r[ROE] >= 0.15,
+				            c3 = if isFin or de = null then null else de <= 1,
+				            c4 = if r[EarningsGrowth] = null then null else r[EarningsGrowth] > 0,
+				            c5 = r[Above200],
+				            c6 = if r[Rsi14] = null then null else r[Rsi14] >= 30 and r[Rsi14] <= 70,
+				            c7 = if upside = null or not enough then null else upside >= 0.10,
+				            c8 = if r[PctFromHigh] = null then null else r[PctFromHigh] <= -0.15,
+				            checks    = {c1, c2, c3, c4, c5, c6, c7, c8},
+				            labels    = {"Valuation below sector P/E", "ROE >= 15%", "Debt/Equity <= 1x", "Earnings growing", "Above 200-DMA", "RSI between 30 and 70", "Analyst upside >= 10%", ">= 15% below 52W high"},
+				            passed    = List.Count(List.Select(checks, each _ = true)),
+				            evaluated = List.Count(List.Select(checks, each _ <> null)),
+				            passRate  = if evaluated = 0 then null else passed / evaluated,
+				            prSafe    = if passRate = null then 0 else passRate,
+				            failedTxt = Text.Combine(List.Transform(List.Select(List.Positions(checks), each checks{_} = false), each labels{_}), "; "),
+
+				            rating = if composite = null then "Insufficient data"
+				                     else if composite >= 72 and prSafe >= 0.75 then "Strong Buy"
+				                     else if composite >= 62 then "Buy"
+				                     else if composite >= 52 then "Accumulate"
+				                     else if composite >= 42 then "Hold / Watch"
+				                     else "Avoid",
+				            techRating = if momentum = null then "n/a" else if momentum >= 70 then "Bullish" else if momentum >= 50 then "Neutral" else "Bearish",
+				            risk = if vol = null then "n/a" else if vol >= 0.45 or (de <> null and de > 2) then "High" else if vol >= 0.30 then "Medium" else "Low",
+
+				            // signals
+				            fromLow  = r[PctFromLow],
+				            fromHigh = r[PctFromHigh],
+				            sigList  = List.Select({
+				                if valuation <> null and quality <> null and valuation >= 70 and quality >= 60 then "Value + Quality" else null,
+				                if fromLow <> null and fromLow <= 0.15 and quality <> null and quality >= 60 then "Quality near 52W low" else null,
+				                if fromLow <> null and fromLow <= 0.10 and (quality = null or quality < 60) then "Near 52W low (weak fundamentals)" else null,
+				                if fromHigh <> null and fromHigh <= -0.30 then "Deep discount to 52W high" else null,
+				                if fromHigh <> null and fromHigh >= -0.03 and r[VolumeRatio] <> null and r[VolumeRatio] >= 1.2 then "Breakout: near 52W high on volume" else null,
+				                if r[Rsi14] <> null and r[Rsi14] < 30 then "Oversold (RSI < 30)" else null,
+				                if r[Rsi14] <> null and r[Rsi14] > 70 then "Overbought (RSI > 70)" else null,
+				                if r[NewsSentiment] <> null and r[NewsSentiment] <= -0.25 then "Negative news flow" else null
+				            }, each _ <> null),
+
+				            // indicative trade plan: stop = clamp(0.3 x annual volatility, 6%, 15%) below price ~ 1.5 x 10-day sigma
+				            stopPct  = if vol = null then 0.10 else List.Min({0.15, List.Max({0.06, 0.30 * vol})}),
+				            stopLvl  = if price = null then null else price * (1 - stopPct),
+				            tgt      = r[TargetMean],
+				            rr       = if tgt = null or price = null or stopLvl = null or tgt <= price then null else (tgt - price) / (price - stopLvl),
+
+				            coverKeys = {r[PE], r[PB], r[ROE], r[ProfitMargin], r[DebtToEquityPct], r[RevenueGrowth], r[EarningsGrowth], r[TargetMean], r[RecMean], r[MarketCap]},
+				            coverage  = List.Count(List.Select(coverKeys, each _ <> null)) / List.Count(coverKeys)
+				        in
+				            [
+				                DebtToEquity     = de,
+				                PEvsSector       = peRel,
+				                UpsidePct        = upside,
+				                ValuationScore   = valuation,
+				                QualityScore     = quality,
+				                GrowthScore      = growth,
+				                MomentumScore    = momentum,
+				                AnalystScore     = analyst,
+				                Composite        = composite,
+				                Rating           = rating,
+				                TechRating       = techRating,
+				                Risk             = risk,
+				                ChecksPassed     = passed,
+				                ChecksEvaluated  = evaluated,
+				                PassRate         = passRate,
+				                ChecksText       = Text.From(passed) & "/" & Text.From(evaluated),
+				                FailedChecks     = failedTxt,
+				                Signals          = Text.Combine(sigList, " | "),
+				                StopPct          = stopPct,
+				                StopLoss         = stopLvl,
+				                RiskReward       = rr,
+				                FundCoverage     = coverage,
+				                Chk_Valuation    = CK(c1),
+				                Chk_ROE          = CK(c2),
+				                Chk_Debt         = CK(c3),
+				                Chk_EarningsGrowth = CK(c4),
+				                Chk_Above200DMA  = CK(c5),
+				                Chk_RSI          = CK(c6),
+				                Chk_AnalystUpside = CK(c7),
+				                Chk_MarginOfSafety = CK(c8)
+				            ],
+
+				    Scored   = Table.AddColumn(Base, "S", each ScoreRow(_), type record),
+				    OutNames = {"DebtToEquity", "PEvsSector", "UpsidePct", "ValuationScore", "QualityScore", "GrowthScore", "MomentumScore", "AnalystScore", "Composite", "Rating", "TechRating", "Risk",
+				                "ChecksPassed", "ChecksEvaluated", "PassRate", "ChecksText", "FailedChecks", "Signals", "StopPct", "StopLoss", "RiskReward", "FundCoverage",
+				                "Chk_Valuation", "Chk_ROE", "Chk_Debt", "Chk_EarningsGrowth", "Chk_Above200DMA", "Chk_RSI", "Chk_AnalystUpside", "Chk_MarginOfSafety"},
+				    Expanded = Table.ExpandRecordColumn(Scored, "S", OutNames, OutNames),
+				    Typed    = Table.TransformColumnTypes(Expanded, {
+				                {"DebtToEquity", type number}, {"PEvsSector", type number}, {"UpsidePct", type number}, {"ValuationScore", type number}, {"QualityScore", type number},
+				                {"GrowthScore", type number}, {"MomentumScore", type number}, {"AnalystScore", type number}, {"Composite", type number}, {"Rating", type text},
+				                {"TechRating", type text}, {"Risk", type text}, {"ChecksPassed", Int64.Type}, {"ChecksEvaluated", Int64.Type}, {"PassRate", type number},
+				                {"ChecksText", type text}, {"FailedChecks", type text}, {"Signals", type text}, {"StopPct", type number}, {"StopLoss", type number},
+				                {"RiskReward", type number}, {"FundCoverage", type number}, {"FundStatus", type text}, {"FundSource", type text}}, "en-US"),
+				    Sorted   = Table.Sort(Typed, {{"Composite", Order.Descending}, {"MomentumScore", Order.Descending}})
+				in
+				    Sorted
+
+	annotation PBI_ResultType = Table

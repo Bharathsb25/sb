@@ -1,0 +1,59 @@
+table Prices
+	lineageTag: 04ee806a-2bbe-4191-b4b5-9fcbf170a75f
+
+	column Symbol
+		dataType: string
+		lineageTag: 8932508c-44dd-485e-a537-11464d3f26d1
+		summarizeBy: none
+		sourceColumn: Symbol
+
+	column Date
+		dataType: dateTime
+		lineageTag: 525c9599-3a5e-4ba1-a410-cd1159460ba3
+		summarizeBy: none
+		sourceColumn: Date
+
+	column Open
+		dataType: double
+		lineageTag: 01bf2241-906d-43b6-ad10-b3c2965ff880
+		summarizeBy: none
+		sourceColumn: Open
+
+	column High
+		dataType: double
+		lineageTag: 7486acd9-a0bb-41ca-8803-0abf84c509b3
+		summarizeBy: none
+		sourceColumn: High
+
+	column Low
+		dataType: double
+		lineageTag: f39d98ae-c41e-45d9-8d16-fa379fe3b19c
+		summarizeBy: none
+		sourceColumn: Low
+
+	column Close
+		dataType: double
+		lineageTag: c60e0bfd-554f-4915-9728-0fee5cb39926
+		summarizeBy: none
+		sourceColumn: Close
+
+	column Volume
+		dataType: int64
+		lineageTag: c54066f9-a4a2-4031-838d-a0bda716b8b7
+		summarizeBy: none
+		sourceColumn: Volume
+
+	partition Prices = m
+		mode: import
+		source =
+				// Query name : Prices             (LOAD: ON)  - 1 year of daily candles per stock; powers the price charts.
+				let
+				    Ok       = Table.SelectRows(StgStocks, each [Status] = "OK"),
+				    WithHist = Table.AddColumn(Ok, "Hist", each [Chart][Hist], type table),
+				    Keep     = Table.SelectColumns(WithHist, {"Symbol", "Hist"}),
+				    Expanded = Table.ExpandTableColumn(Keep, "Hist", {"Date", "Open", "High", "Low", "Close", "Volume"}),
+				    Typed    = Table.TransformColumnTypes(Expanded, {{"Symbol", type text}, {"Date", type date}, {"Open", type number}, {"High", type number}, {"Low", type number}, {"Close", type number}, {"Volume", Int64.Type}})
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table
