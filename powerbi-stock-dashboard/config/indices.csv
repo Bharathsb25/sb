@@ -1,0 +1,45 @@
+Symbol,Name,Group,Region
+^NSEI,Nifty 50,Equity Index,India
+^BSESN,Sensex,Equity Index,India
+^NSEBANK,Bank Nifty,Equity Index,India
+^INDIAVIX,India VIX,Volatility,India
+^CNXIT,Nifty IT,India Sector,India
+^CNXPHARMA,Nifty Pharma,India Sector,India
+^CNXFMCG,Nifty FMCG,India Sector,India
+^CNXAUTO,Nifty Auto,India Sector,India
+^CNXMETAL,Nifty Metal,India Sector,India
+^CNXENERGY,Nifty Energy,India Sector,India
+^CNXREALTY,Nifty Realty,India Sector,India
+^CNXINFRA,Nifty Infra,India Sector,India
+^CNXPSUBANK,Nifty PSU Bank,India Sector,India
+^GSPC,S&P 500,Equity Index,North America
+^IXIC,Nasdaq Composite,Equity Index,North America
+^DJI,Dow Jones,Equity Index,North America
+^RUT,Russell 2000,Equity Index,North America
+^VIX,CBOE VIX,Volatility,North America
+^FTSE,FTSE 100,Equity Index,Europe
+^GDAXI,DAX,Equity Index,Europe
+^FCHI,CAC 40,Equity Index,Europe
+^STOXX50E,Euro Stoxx 50,Equity Index,Europe
+^N225,Nikkei 225,Equity Index,Asia Pacific
+^HSI,Hang Seng,Equity Index,Asia Pacific
+000001.SS,Shanghai Composite,Equity Index,Asia Pacific
+^KS11,KOSPI,Equity Index,Asia Pacific
+^TWII,Taiwan Weighted,Equity Index,Asia Pacific
+^STI,Straits Times,Equity Index,Asia Pacific
+^AXJO,ASX 200,Equity Index,Asia Pacific
+^BVSP,Bovespa,Equity Index,Latin America
+GC=F,Gold,Commodity,Global
+SI=F,Silver,Commodity,Global
+CL=F,WTI Crude,Commodity,Global
+BZ=F,Brent Crude,Commodity,Global
+NG=F,Natural Gas,Commodity,Global
+HG=F,Copper,Commodity,Global
+USDINR=X,USD/INR,Currency,Global
+EURINR=X,EUR/INR,Currency,Global
+DX-Y.NYB,US Dollar Index,Currency,Global
+EURUSD=X,EUR/USD,Currency,Global
+JPY=X,USD/JPY,Currency,Global
+^TNX,US 10Y Yield,Bond Yield,Global
+BTC-USD,Bitcoin,Crypto,Global
+ETH-USD,Ethereum,Crypto,Global

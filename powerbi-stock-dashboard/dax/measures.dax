@@ -1,0 +1,285 @@
+// =====================================================================================================
+//  DAX for the Stock Investment Dashboard
+//  How to add: Model view > select the table named in each section header > New measure / New column,
+//  then paste ONE definition at a time (the text before the first "=" is the measure name).
+//  Suggested "Display folder": the section name. Percent columns are stored as fractions (0.05 = 5%).
+// =====================================================================================================
+
+// ---------------------------------------------------------------------------------------------------
+//  CALCULATED COLUMNS  (table: Scorecard)  - used only to give text columns a sensible sort order
+// ---------------------------------------------------------------------------------------------------
+Rating Sort =
+SWITCH (
+    Scorecard[Rating],
+    "Strong Buy", 1,
+    "Buy", 2,
+    "Accumulate", 3,
+    "Hold / Watch", 4,
+    "Avoid", 5,
+    6
+)
+// -> Column tools > Sort by column: Rating  by  Rating Sort
+
+Risk Sort =
+SWITCH ( Scorecard[Risk], "Low", 1, "Medium", 2, "High", 3, 4 )
+// -> sort Risk by Risk Sort
+
+Cap Bucket =
+VAR cr = Scorecard[MarketCap] / 10000000        -- INR crore
+RETURN
+    SWITCH (
+        TRUE (),
+        ISBLANK ( Scorecard[MarketCap] ), "Unknown",
+        cr >= 100000, "Mega (> 1L Cr)",
+        cr >= 30000, "Large (30k-1L Cr)",
+        cr >= 8000, "Mid (8k-30k Cr)",
+        "Small (< 8k Cr)"
+    )
+
+// ---------------------------------------------------------------------------------------------------
+//  MARKET BREADTH & MOOD  (table: Scorecard)
+// ---------------------------------------------------------------------------------------------------
+Stocks Tracked = COUNTROWS ( Scorecard )
+
+Advancers = CALCULATE ( COUNTROWS ( Scorecard ), Scorecard[DayChangePct] > 0 )
+
+Decliners = CALCULATE ( COUNTROWS ( Scorecard ), Scorecard[DayChangePct] < 0 )
+
+Unchanged = [Stocks Tracked] - [Advancers] - [Decliners]
+
+Breadth % = DIVIDE ( [Advancers], [Advancers] + [Decliners] )
+
+Avg Day Change % = AVERAGE ( Scorecard[DayChangePct] )
+
+MCap Weighted Day Change % =
+DIVIDE (
+    SUMX ( Scorecard, Scorecard[DayChangePct] * Scorecard[HeatSize] ),
+    SUMX ( FILTER ( Scorecard, NOT ISBLANK ( Scorecard[DayChangePct] ) ), Scorecard[HeatSize] )
+)
+
+Market Mood =
+SWITCH (
+    TRUE (),
+    ISBLANK ( [Breadth %] ), "No data",
+    [Breadth %] >= 0.65, "Bullish",
+    [Breadth %] >= 0.45, "Neutral",
+    "Bearish"
+)
+
+Market Mood Color =
+SWITCH ( [Market Mood], "Bullish", "#22B07D", "Neutral", "#E0B441", "Bearish", "#D9503F", "#8A94A6" )
+
+// Field-value colour for the heat-map treemap / matrix  (Format > Colors > fx > Format style: Field value)
+Heat Color =
+VAR c = AVERAGE ( Scorecard[DayChangePct] )
+RETURN
+    SWITCH (
+        TRUE (),
+        ISBLANK ( c ), "#3A4454",
+        c >= 0.03, "#0B8F5F",
+        c >= 0.015, "#22B07D",
+        c >= 0.0025, "#6CCBA5",
+        c > -0.0025, "#5D6778",
+        c > -0.015, "#E58C7E",
+        c > -0.03, "#D9503F",
+        "#B3261E"
+    )
+
+// ---------------------------------------------------------------------------------------------------
+//  52-WEEK LOW / HIGH RADAR  (table: Scorecard)
+//  NB: DAX treats BLANK as 0 in comparisons, so blanks are excluded explicitly.
+// ---------------------------------------------------------------------------------------------------
+Near 52W Low (<=10%) =
+CALCULATE (
+    COUNTROWS ( Scorecard ),
+    FILTER ( Scorecard, NOT ISBLANK ( Scorecard[PctFromLow] ) && Scorecard[PctFromLow] <= 0.10 )
+)
+
+Near 52W High (<=3%) =
+CALCULATE (
+    COUNTROWS ( Scorecard ),
+    FILTER ( Scorecard, NOT ISBLANK ( Scorecard[PctFromHigh] ) && Scorecard[PctFromHigh] >= -0.03 )
+)
+
+Deep Discount (>30% off high) =
+CALCULATE (
+    COUNTROWS ( Scorecard ),
+    FILTER ( Scorecard, NOT ISBLANK ( Scorecard[PctFromHigh] ) && Scorecard[PctFromHigh] <= -0.30 )
+)
+
+Quality Near 52W Low =
+CALCULATE (
+    COUNTROWS ( Scorecard ),
+    FILTER (
+        Scorecard,
+        NOT ISBLANK ( Scorecard[PctFromLow] ) && Scorecard[PctFromLow] <= 0.15
+            && NOT ISBLANK ( Scorecard[QualityScore] ) && Scorecard[QualityScore] >= 60
+    )
+)
+
+Avg Distance From 52W High = AVERAGE ( Scorecard[PctFromHigh] )
+
+// ---------------------------------------------------------------------------------------------------
+//  RECOMMENDATIONS, TARGETS, VALUE FOR MONEY  (table: Scorecard)
+// ---------------------------------------------------------------------------------------------------
+Buy Signals =
+CALCULATE ( COUNTROWS ( Scorecard ), Scorecard[Rating] IN { "Strong Buy", "Buy" } )
+
+Avoid Signals = CALCULATE ( COUNTROWS ( Scorecard ), Scorecard[Rating] = "Avoid" )
+
+Value + Quality Picks =
+CALCULATE (
+    COUNTROWS ( Scorecard ),
+    FILTER (
+        Scorecard,
+        NOT ISBLANK ( Scorecard[ValuationScore] ) && Scorecard[ValuationScore] >= 70
+            && NOT ISBLANK ( Scorecard[QualityScore] ) && Scorecard[QualityScore] >= 60
+    )
+)
+
+Avg Analyst Upside % = AVERAGE ( Scorecard[UpsidePct] )
+
+Avg Composite Score = AVERAGE ( Scorecard[Composite] )
+
+Top Pick =
+VAR t = TOPN ( 1, FILTER ( Scorecard, NOT ISBLANK ( Scorecard[Composite] ) ), Scorecard[Composite], DESC )
+RETURN MAXX ( t, Scorecard[Name] )
+
+Top Pick Score =
+VAR t = TOPN ( 1, FILTER ( Scorecard, NOT ISBLANK ( Scorecard[Composite] ) ), Scorecard[Composite], DESC )
+RETURN MAXX ( t, Scorecard[Composite] )
+
+Best Upside Pick =
+VAR t = TOPN ( 1, FILTER ( Scorecard, NOT ISBLANK ( Scorecard[UpsidePct] ) && Scorecard[AnalystScore] >= 50 ), Scorecard[UpsidePct], DESC )
+RETURN MAXX ( t, Scorecard[Name] )
+
+Market Cap (Rs Cr) = DIVIDE ( SUM ( Scorecard[MarketCap] ), 10000000 )
+
+Rating Color =
+SWITCH (
+    SELECTEDVALUE ( Scorecard[Rating] ),
+    "Strong Buy", "#0B8F5F",
+    "Buy", "#22B07D",
+    "Accumulate", "#6CCBA5",
+    "Hold / Watch", "#E0B441",
+    "Avoid", "#D9503F",
+    "#8A94A6"
+)
+
+Score Color =
+VAR s = AVERAGE ( Scorecard[Composite] )
+RETURN
+    SWITCH ( TRUE (), ISBLANK ( s ), "#3A4454", s >= 72, "#0B8F5F", s >= 62, "#22B07D", s >= 52, "#6CCBA5", s >= 42, "#E0B441", "#D9503F" )
+
+// ---------------------------------------------------------------------------------------------------
+//  STOCK DEEP-DIVE  (use with a single-select Name slicer or drill-through on Scorecard[Name])
+// ---------------------------------------------------------------------------------------------------
+Selected Stock = SELECTEDVALUE ( Scorecard[Name], "Select a stock" )
+
+Selected Verdict =
+SELECTEDVALUE ( Scorecard[Rating], "-" ) & "  |  Score " & FORMAT ( AVERAGE ( Scorecard[Composite] ), "0" ) & "/100  |  Checks " & SELECTEDVALUE ( Scorecard[ChecksText], "-" )
+
+Analyst Target Range =
+IF (
+    NOT ISBLANK ( MAX ( Scorecard[TargetMean] ) ),
+    FORMAT ( MAX ( Scorecard[TargetLow] ), "#,##0" ) & "  -  " & FORMAT ( MAX ( Scorecard[TargetMean] ), "#,##0" ) & "  -  " & FORMAT ( MAX ( Scorecard[TargetHigh] ), "#,##0" ),
+    "No analyst coverage"
+)
+
+// Price line-chart helpers (visual filtered to ONE stock through the relationship Scorecard -> Prices)
+Close = AVERAGE ( Prices[Close] )
+
+SMA 50 =
+VAR d = MAX ( Prices[Date] )
+VAR s = SELECTEDVALUE ( Prices[Symbol] )
+VAR win = TOPN ( 50, FILTER ( ALL ( Prices ), Prices[Symbol] = s && Prices[Date] <= d ), Prices[Date], DESC )
+RETURN IF ( COUNTROWS ( win ) = 50, AVERAGEX ( win, Prices[Close] ) )
+
+SMA 200 =
+VAR d = MAX ( Prices[Date] )
+VAR s = SELECTEDVALUE ( Prices[Symbol] )
+VAR win = TOPN ( 200, FILTER ( ALL ( Prices ), Prices[Symbol] = s && Prices[Date] <= d ), Prices[Date], DESC )
+RETURN IF ( COUNTROWS ( win ) = 200, AVERAGEX ( win, Prices[Close] ) )
+
+// Compare several stocks on one chart: every line starts at 100 on the first date in the slicer range
+Rebased 100 (Stocks) =
+VAR d0 = CALCULATE ( MIN ( Prices[Date] ), ALLSELECTED ( Prices[Date] ) )
+VAR p0 = CALCULATE ( AVERAGE ( Prices[Close] ), Prices[Date] = d0 )
+RETURN DIVIDE ( AVERAGE ( Prices[Close] ), p0 ) * 100
+
+// ---------------------------------------------------------------------------------------------------
+//  GLOBAL MARKETS & MACRO  (tables: Indices, IndexPrices)
+// ---------------------------------------------------------------------------------------------------
+Index Level = AVERAGE ( Indices[Price] )
+
+Index Day Change % = AVERAGE ( Indices[DayChangePct] )
+
+Index 1Y Return % = AVERAGE ( Indices[Ret1Y] )
+
+Index YTD Return % = AVERAGE ( Indices[RetYtd] )
+
+Index From 52W High % = AVERAGE ( Indices[PctFromHigh] )
+
+Indices Up = CALCULATE ( COUNTROWS ( Indices ), Indices[DayChangePct] > 0 )
+
+Indices Down = CALCULATE ( COUNTROWS ( Indices ), Indices[DayChangePct] < 0 )
+
+Global Risk Mode =
+// Uses the two fear gauges in config\indices.csv: CBOE VIX and India VIX
+VAR vix = CALCULATE ( AVERAGE ( Indices[Price] ), Indices[Symbol] = "^VIX" )
+VAR ivix = CALCULATE ( AVERAGE ( Indices[Price] ), Indices[Symbol] = "^INDIAVIX" )
+VAR worst = MAX ( vix, ivix )
+RETURN
+    SWITCH ( TRUE (), ISBLANK ( worst ), "No data", worst >= 25, "Risk-OFF (fear)", worst >= 18, "Cautious", "Risk-ON (calm)" )
+
+Index Heat Color =
+VAR c = AVERAGE ( Indices[DayChangePct] )
+RETURN
+    SWITCH (
+        TRUE (),
+        ISBLANK ( c ), "#3A4454",
+        c >= 0.02, "#0B8F5F",
+        c >= 0.01, "#22B07D",
+        c >= 0.002, "#6CCBA5",
+        c > -0.002, "#5D6778",
+        c > -0.01, "#E58C7E",
+        c > -0.02, "#D9503F",
+        "#B3261E"
+    )
+
+Rebased 100 (Indices) =
+VAR d0 = CALCULATE ( MIN ( IndexPrices[Date] ), ALLSELECTED ( IndexPrices[Date] ) )
+VAR p0 = CALCULATE ( AVERAGE ( IndexPrices[Close] ), IndexPrices[Date] = d0 )
+RETURN DIVIDE ( AVERAGE ( IndexPrices[Close] ), p0 ) * 100
+
+// ---------------------------------------------------------------------------------------------------
+//  NEWS & SENTIMENT  (table: News)
+// ---------------------------------------------------------------------------------------------------
+Headlines = COUNTROWS ( News )
+
+Avg Sentiment = AVERAGE ( News[Sentiment] )
+
+Positive % = DIVIDE ( CALCULATE ( COUNTROWS ( News ), News[SentimentLabel] = "Positive" ), [Headlines] )
+
+Negative % = DIVIDE ( CALCULATE ( COUNTROWS ( News ), News[SentimentLabel] = "Negative" ), [Headlines] )
+
+News Mood =
+SWITCH ( TRUE (), ISBLANK ( [Avg Sentiment] ), "No data", [Avg Sentiment] > 0.1, "Positive", [Avg Sentiment] < -0.1, "Negative", "Mixed" )
+
+// ---------------------------------------------------------------------------------------------------
+//  DATA VALIDATION  (table: Validation)
+// ---------------------------------------------------------------------------------------------------
+Symbols Checked = COUNTROWS ( Validation )
+
+Symbols Good = CALCULATE ( COUNTROWS ( Validation ), Validation[Overall] = "Good" )
+
+Symbols Warning = CALCULATE ( COUNTROWS ( Validation ), Validation[Overall] = "Warning" )
+
+Symbols Failed = CALCULATE ( COUNTROWS ( Validation ), Validation[Overall] = "Failed" )
+
+Data Health % = DIVIDE ( [Symbols Good], [Symbols Checked] )
+
+Fundamentals Coverage % = AVERAGE ( Scorecard[FundCoverage] )
+
+Last Updated =
+"Updated " & FORMAT ( MAX ( LastRefresh[LastRefresh] ), "dd mmm yyyy, hh:nn AM/PM" ) & " IST"
