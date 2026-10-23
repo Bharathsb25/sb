@@ -124,6 +124,43 @@ def tier(s):
     return "C"
 
 
+CITIES = [
+    (r"chennai", "Chennai"),
+    (r"bengaluru|bangalore|karnataka", "Bengaluru"),
+    (r"hyderabad", "Hyderabad"),
+    (r"coimbatore", "Coimbatore"),
+    (r"pune", "Pune"),
+    (r"remote", "Remote"),
+]
+
+# First match wins, so the closest fit to the CV comes first.
+FAMILIES = [
+    (r"implementation|implementaion|onboarding|configuration", "Implementation"),
+    (r"customer success|client engagement|technical success|account manager|enablement", "Customer success"),
+    (r"functional|\berp|zoho|odoo|netsuite|dynamics|servicenow|salesforce|oracle|\bhcm\b|hris|hrsd|workday|business central", "Functional / ERP"),
+    (r"analyst|product owner|\bba\b", "Business / product analyst"),
+    (r"solution|presales|value consultant|consultant", "Solution consulting"),
+    (r"project|delivery|\bpmo\b|coordinat", "Project / delivery"),
+    (r"\bqa\b|test", "QA"),
+]
+
+
+def label(text, table, default):
+    for pattern, name in table:
+        if re.search(pattern, text.lower()):
+            return name
+    return default
+
+
+def plan_week(job):
+    # Week 1 takes the top 15, week 2 the rest of tiers A and B.
+    if job["rank"] <= 15:
+        return "Week 1"
+    if job["tier"] in "AB":
+        return "Week 2"
+    return "Backlog"
+
+
 def main():
     args = sys.argv[1:]
     today = date.today()
@@ -149,8 +186,15 @@ def main():
     ranked.sort(key=lambda j: (-j["score"], j["age_days"]))
     for i, job in enumerate(ranked, 1):
         job["rank"] = i
+        job["city"] = label(job["location"], CITIES, "Other")
+        job["family"] = label(job["title"], FAMILIES, "Other")
+        job["plan"] = plan_week(job)
 
-    fields = ["rank", "tier", "score", "title", "company", "location", "posted", "age_days", "type", "url", "why"]
+    fields = ["rank", "tier", "score", "title", "company", "location", "city", "family",
+              "plan", "posted", "age_days", "type", "url", "why"]
+    (HERE / "ranked_jobs.json").write_text(
+        json.dumps([{k: j.get(k, "") for k in fields} for j in ranked], indent=1, ensure_ascii=False) + "\n"
+    )
     with open(HERE / "ranked_jobs.csv", "w", newline="") as f:
         w = csv.DictWriter(f, fieldnames=fields, extrasaction="ignore")
         w.writeheader()
