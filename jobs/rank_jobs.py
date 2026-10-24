@@ -1,6 +1,7 @@
 """Dedupe and rank scraped job listings against Bharath's CV profile.
 
-Usage: python jobs/rank_jobs.py [raw.json] [--today YYYY-MM-DD]
+Usage: python jobs/rank_jobs.py [raw.json] [--today YYYY-MM-DD] [--max-age DAYS]
+Only postings at most --max-age days old (default 30) are kept.
 Writes jobs/ranked_jobs.csv and jobs/RANKED_JOBS.md.
 """
 import csv
@@ -100,10 +101,14 @@ def score(job, today):
         reasons.append("non-permanent -5")
 
     age = (today - date.fromisoformat(job["posted"])).days
-    if age <= 30:
+    if age <= 7:
         rec = 10
+    elif age <= 14:
+        rec = 7
+    elif age <= 30:
+        rec = 4
     elif age <= 90:
-        rec = 5
+        rec = 0
     elif age <= 180:
         rec = 0
     elif age <= 365:
@@ -168,9 +173,16 @@ def main():
         i = args.index("--today")
         today = date.fromisoformat(args[i + 1])
         del args[i : i + 2]
+    max_age = 30
+    if "--max-age" in args:
+        i = args.index("--max-age")
+        max_age = int(args[i + 1])
+        del args[i : i + 2]
     raw_path = Path(args[0]) if args else HERE / "data" / "indeed_raw.json"
 
     jobs = json.loads(raw_path.read_text())
+    scraped = len(jobs)
+    jobs = [j for j in jobs if (today - date.fromisoformat(j["posted"])).days <= max_age]
 
     # The same posting shows up under several short URLs; keep the newest.
     deduped = {}
@@ -203,7 +215,7 @@ def main():
     lines = [
         "# Ranked jobs",
         "",
-        f"{len(ranked)} unique jobs from {len(jobs)} Indeed results, ranked on {today.isoformat()}.",
+        f"{len(ranked)} unique jobs posted in the last {max_age} days ({len(jobs)} of {scraped} Indeed results), ranked on {today.isoformat()}.",
         "Tier A = apply first, B = good fit, C = stretch or weak match.",
         "",
         "| # | Tier | Score | Job | Company | Location | Posted |",
@@ -218,7 +230,7 @@ def main():
     (HERE / "RANKED_JOBS.md").write_text("\n".join(lines) + "\n")
 
     counts = {t: sum(1 for j in ranked if j["tier"] == t) for t in "ABC"}
-    print(f"{len(jobs)} raw -> {len(ranked)} unique. Tiers: {counts}")
+    print(f"{scraped} raw -> {len(jobs)} within {max_age} days -> {len(ranked)} unique. Tiers: {counts}")
     for j in ranked[:25]:
         print(f"{j['rank']:>3} {j['tier']} {j['score']:>3}  {j['title']} | {j['company']} | {j['location']}")
 
